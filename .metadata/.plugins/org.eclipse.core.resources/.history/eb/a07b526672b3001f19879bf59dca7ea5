@@ -1,0 +1,5 @@
+package com.mokcoding.ex02.service;
+
+public interface BoardService {
+
+}

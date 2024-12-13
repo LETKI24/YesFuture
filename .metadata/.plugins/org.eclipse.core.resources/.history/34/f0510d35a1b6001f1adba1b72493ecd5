@@ -1,0 +1,5 @@
+package com.mokcoding.ex04.domain;
+
+public class AttachVO {
+
+}

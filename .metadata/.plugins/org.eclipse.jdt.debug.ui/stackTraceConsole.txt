@@ -1,0 +1,3 @@
+ProductVO product = new ProductVO();
+		product.setName("¾ß±¸°ø");
+		product.setPrice(10000);

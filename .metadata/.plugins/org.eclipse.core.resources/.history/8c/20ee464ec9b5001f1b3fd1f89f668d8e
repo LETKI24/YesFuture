@@ -1,0 +1,5 @@
+package com.mokcoding.ex03.domain;
+
+public class ReplyVO {
+
+}

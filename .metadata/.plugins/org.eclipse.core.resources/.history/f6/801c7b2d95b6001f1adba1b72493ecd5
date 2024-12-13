@@ -1,0 +1,5 @@
+package com.mokcoding.ex04.config;
+
+public class WebConfig {
+
+}
