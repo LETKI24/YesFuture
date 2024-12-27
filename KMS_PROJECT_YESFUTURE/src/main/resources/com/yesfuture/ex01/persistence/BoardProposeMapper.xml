@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mapper XML 설정 태그 -->
+
+<mapper namespace="com.yesfuture.ex01.persistence.BoardProposeMapper">
+	
+	 <!-- DB와 자바의 변수명 매칭 시키는 곳 - id는 DB쪽, type은 자바(VO)쪽 -->
+	<resultMap type="com.yesfuture.ex01.domain.BoardProposeVO" id="boardProposeResultMap">
+		<id property = "boardProposeId" column="BOARD_PROPOSE_ID"/>
+		<result property = "boardProposeTitle" column="BOARD_PROPOSE_TITLE"/>
+		<result property = "boardProposeContent" column="BOARD_PROPOSE_CONTENT"/>
+		<result property = "memberNickname" column="MEMBER_NICKNAME"/>
+		<result property = "memberId" column="MEMBER_ID"/>
+		<result property = "boardProposeDateCreated" column="BOARD_PROPOSE_DATE_CREATED"/>
+		<result property = "boardProposeReplyCount" column="BOARD_PROPOSE_REPLY_COUNT"/>
+		<result property = "boardProposeHitCount" column="BOARD_PROPOSE_HIT_COUNT"/>
+	</resultMap>
+	 
+	 <select id="getBoardProposeListMinimal" resultMap="boardProposeResultMap">
+	    <![CDATA[
+	        SELECT *
+	        FROM (
+	            SELECT *
+	            FROM BOARD_PROPOSE
+	            ORDER BY BOARD_PROPOSE_HIT_COUNT DESC
+	        )
+	        WHERE ROWNUM <= 10
+	    ]]>
+	 </select>
+
+	 
+</mapper>

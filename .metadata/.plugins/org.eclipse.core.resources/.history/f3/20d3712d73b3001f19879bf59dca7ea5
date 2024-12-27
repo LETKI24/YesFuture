@@ -1,5 +1,0 @@
-package com.mokcoding.ex02.service;
-
-public class BoardServiceImple implements BoardService{
-
-}

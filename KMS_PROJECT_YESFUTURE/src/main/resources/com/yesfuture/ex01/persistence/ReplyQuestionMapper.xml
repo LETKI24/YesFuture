@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.ReplyQuestionMapper">
+	<resultMap type="com.yesfuture.ex01.domain.ReplyQuestionVO" id="replyResultMap">
+      <id property="replyQuestionId" column="REPLY_QUESTION_ID" /> 
+      <result property="boardQuestionId" column="BOARD_QUESTION_ID" /> 
+      <result property="memberNickname" column="MEMBER_NICKNAME" />
+      <result property="memberId" column="MEMBER_ID" />
+      <result property="replyQuestionContent" column="REPLY_QUESTION_CONTENT" />
+      <result property="replyQuestionDateCreated" column="REPLY_QUESTION_DATE_CREATED" />
+      <result property="replyQuestionLike" column="REPLY_QUESTION_LIKE" />
+      <result property="replyQuestionHate" column="REPLY_QUESTION_HATE" />
+    </resultMap>
+   
+	<insert id="insert">
+      INSERT INTO REPLY_QUESTION (REPLY_QUESTION_ID, BOARD_QUESTION_ID, MEMBER_NICKNAME, MEMBER_ID,
+       REPLY_QUESTION_CONTENT, REPLY_QUESTION_DATE_CREATED, REPLY_QUESTION_LIKE, REPLY_QUESTION_HATE)
+      VALUES (REPLY_QUESTION_SEQ.NEXTVAL, #{boardQuestionId}, #{memberNickname}, #{memberId},
+       #{replyQuestionContent}, SYSDATE, 0, 0)
+	</insert>
+
+	<select id="selectListByBoardId" resultMap="replyResultMap">
+      SELECT * FROM REPLY_QUESTION
+      WHERE BOARD_QUESTION_ID = #{boardQuestionId}
+      ORDER BY REPLY_QUESTION_ID
+	</select>
+
+
+</mapper>

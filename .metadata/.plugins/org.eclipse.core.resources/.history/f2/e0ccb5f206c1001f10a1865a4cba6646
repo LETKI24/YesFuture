@@ -1,0 +1,85 @@
+package com.yesfuture.ex01.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yesfuture.ex01.domain.BoardFreeVO;
+import com.yesfuture.ex01.domain.BoardProposeVO;
+import com.yesfuture.ex01.domain.BoardQuestionVO;
+import com.yesfuture.ex01.service.BoardService;
+
+import lombok.extern.log4j.Log4j;
+
+@Controller
+@RequestMapping(value = "/boardReal") // url : /ex01/boardReal
+@Log4j
+public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
+	
+	// boardMain.jsp 페이지 호출
+	@GetMapping("/boardMain")
+	public void boardMainGET(Model model) {
+		log.info("boardMainGET()");
+		List<BoardQuestionVO> boardQuestionListMinimal =  boardService.getBoardQuestionListMinimal();
+		
+		model.addAttribute("boardQuestionListMinimal", boardQuestionListMinimal);
+	}
+	
+	@GetMapping("/proposeMinimal")
+	@ResponseBody
+	public List<BoardProposeVO> getBoardProposeListMinimal() {
+		log.info("getBoardProposeListMinimal()");
+        List<BoardProposeVO> boardProposeListMinimal = boardService.getBoardProposeListMinimal();
+        return boardProposeListMinimal; // JSON 형태로 반환
+    }
+	
+	@GetMapping("/questionMinimal")
+	@ResponseBody
+	public List<BoardQuestionVO> getBoardQuestionListMinimal() {
+		log.info("getBoardQuestionListMinimal()");
+        List<BoardQuestionVO> boardQuestionListMinimal = boardService.getBoardQuestionListMinimal();
+        return boardQuestionListMinimal; // JSON 형태로 반환
+    }
+	
+	@GetMapping("/freeMinimal")
+	@ResponseBody
+	public List<BoardFreeVO> getBoardFreeListMinimal() {
+		log.info("getBoardFreeListMinimal()");
+        List<BoardFreeVO> boardFreeListMinimal = boardService.getBoardFreeListMinimal();
+        return boardFreeListMinimal; // JSON 형태로 반환
+    }
+	
+	// boardFree.jsp 페이지 호출
+	@GetMapping("/boardFree")
+	public void boardFreeList() {
+		log.info("boardFreeList()");
+	}
+	// boardQuestion.jsp 페이지 호출
+	@GetMapping("/boardQuestion")
+	public void boardQuestionList(Model model, Pagination pagination) {
+		log.info("boardQuestionList()");
+		log.info("pagination = " + pagination);
+		List<BoardQuestionVO> boardList = boardService.getPagingBoards(pagination);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPagination(pagination);
+		pageMaker.setTotalCount(boardService.getTotalCount());
+
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("boardList", boardList);
+	}
+	// boardPropose.jsp 페이지 호출
+	@GetMapping("/boardPropose")
+	public void boardProposeList() {
+		log.info("boardProposeList()");
+	}
+	
+}

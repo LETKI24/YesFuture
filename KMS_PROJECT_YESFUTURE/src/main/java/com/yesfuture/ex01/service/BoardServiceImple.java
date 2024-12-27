@@ -1,0 +1,88 @@
+package com.yesfuture.ex01.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.yesfuture.ex01.domain.BoardFreeVO;
+import com.yesfuture.ex01.domain.BoardProposeVO;
+import com.yesfuture.ex01.domain.BoardQuestionVO;
+import com.yesfuture.ex01.persistence.BoardFreeMapper;
+import com.yesfuture.ex01.persistence.BoardProposeMapper;
+import com.yesfuture.ex01.persistence.BoardQuestionMapper;
+import com.yesfuture.ex01.util.Pagination;
+
+import lombok.extern.log4j.Log4j;
+
+@Service
+@Log4j
+public class BoardServiceImple implements BoardService{
+
+	@Autowired
+	private BoardQuestionMapper boardQuestionMapper;
+	
+	@Autowired
+	private BoardProposeMapper boardProposeMapper;
+	
+	@Autowired
+	private BoardFreeMapper boardFreeMapper;
+	
+	@Override
+	public List<BoardQuestionVO> getBoardQuestionListMinimal() {
+		log.info("getBoardQuestionListMinimal()");
+		return boardQuestionMapper.getBoardQuestionListMinimal();
+	}
+
+	@Override
+	public List<BoardProposeVO> getBoardProposeListMinimal() {
+		log.info("getBoardProposeListMinimal()");
+		return boardProposeMapper.getBoardProposeListMinimal();
+	}
+
+	@Override
+	public List<BoardFreeVO> getBoardFreeListMinimal() {
+		log.info("getBoardFreeListMinimal()");
+		return boardFreeMapper.getBoardFreeListMinimal();
+	}
+	
+	// 질문게시판 관련 ServiceImple
+	
+	@Override
+	public List<BoardQuestionVO> getQuestionPagingBoards(Pagination pagination) {
+		log.info("getQuestionPagingBoards()");
+		return boardQuestionMapper.selectQuestionListByPagination(pagination);
+	}
+
+	@Override
+	public int getQuestionTotalCount() {
+		log.info("getQuestionTotalCount()");
+		return boardQuestionMapper.selectQuestionTotalCount();
+	}
+
+	@Override
+	public BoardQuestionVO getBoardQuestionById(Integer boardQuestionId) {
+		log.info("getBoardQuestionById");
+		return boardQuestionMapper.selectOne(boardQuestionId);
+	}
+
+	@Override
+	public int createBoardQuestion(BoardQuestionVO boardQuestionVO) {
+		log.info("createBoardQuestion()");
+		int result = boardQuestionMapper.insert(boardQuestionVO);
+		return result;
+	}
+
+	@Override
+	public int updateBoardQuestion(BoardQuestionVO boardQuestionVO) {
+		log.info("updateBoardQuestion()");
+		return boardQuestionMapper.update(boardQuestionVO);
+	}
+
+	@Override
+	public int deleteBoardQuestion(Integer boardQuestionId) {
+		log.info("deleteBoardQuestion()");
+		return boardQuestionMapper.delete(boardQuestionId);
+	}
+
+}

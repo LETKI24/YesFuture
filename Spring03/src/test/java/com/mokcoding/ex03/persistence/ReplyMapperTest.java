@@ -30,7 +30,7 @@ public class ReplyMapperTest {
 		replyVO.setReplyContent("댓글 테스트");
 		replyVO.setMemberId("test");
 		int result = replyMapper.insert(replyVO);
-		log.info(result);
+		log.info("result : " + result);
 		
 	}
 

@@ -1,0 +1,27 @@
+package com.yesfuture.ex01.persistence;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.yesfuture.ex01.domain.BoardQuestionVO;
+import com.yesfuture.ex01.util.Pagination;
+
+@Mapper
+public interface BoardQuestionMapper {
+	List<BoardQuestionVO> getBoardQuestionListMinimal();
+
+	List<BoardQuestionVO> selectQuestionListByPagination(Pagination pagination);
+
+	int selectQuestionTotalCount();
+
+	BoardQuestionVO selectOne(Integer boardQuestionId);
+
+	int insert(BoardQuestionVO boardQuestionVO);
+
+	int update(BoardQuestionVO boardQuestionVO);
+
+	int delete(int boardQuestionId);
+
+	int updateReplyCount(int boardQuestionId, int i);
+}

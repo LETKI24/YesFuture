@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Mapper XML 설정 태그 -->
+
+<mapper namespace="com.yesfuture.ex01.persistence.BoardFreeMapper">
+	
+	 <!-- DB와 자바의 변수명 매칭 시키는 곳 - id는 DB쪽, type은 자바(VO)쪽 -->
+	<resultMap type="com.yesfuture.ex01.domain.BoardFreeVO" id="boardFreeResultMap">
+		<id property = "boardFreeId" column="BOARD_FREE_ID"/>
+		<result property = "boardFreeTitle" column="BOARD_FREE_TITLE"/>
+		<result property = "boardFreeContent" column="BOARD_FREE_CONTENT"/>
+		<result property = "memberNickname" column="MEMBER_NICKNAME"/>
+		<result property = "memberId" column="MEMBER_ID"/>
+		<result property = "boardFreeDateCreated" column="BOARD_FREE_DATE_CREATED"/>
+		<result property = "boardFreeReplyCount" column="BOARD_FREE_REPLY_COUNT"/>
+		<result property = "boardFreeHitCount" column="BOARD_FREE_HIT_COUNT"/>
+		<result property = "boardFreeLikeCount" column="BOARD_FREE_LIKE_COUNT"/>
+	</resultMap>
+	 
+	 <select id="getBoardFreeListMinimal" resultMap="boardFreeResultMap">
+	    <![CDATA[
+	        SELECT *
+	        FROM (
+	            SELECT *
+	            FROM BOARD_FREE
+	            ORDER BY BOARD_FREE_LIKE_COUNT DESC
+	        )
+	        WHERE ROWNUM <= 10
+	    ]]>
+	 </select>
+
+</mapper>

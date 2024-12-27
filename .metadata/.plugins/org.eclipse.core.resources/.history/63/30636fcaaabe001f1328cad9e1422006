@@ -1,0 +1,5 @@
+package com.yesfuture.ex01.domain;
+
+public class BoardFreeVO {
+
+}

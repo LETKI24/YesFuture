@@ -1,0 +1,5 @@
+package com.yesfuture.ex01.persistence;
+
+public interface BoardFreeMapper {
+
+}

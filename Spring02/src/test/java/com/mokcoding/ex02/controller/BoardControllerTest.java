@@ -57,8 +57,8 @@ public class BoardControllerTest {
 		log.info("testRegister()");
 		
 		RequestBuilder requestBuilder = post("/board/register") // post 방식, parameter로 보내자
-				.param("boardTitle", "게시글 등록")
-				.param("boardContent", "게시글 테스트")
+				.param("boardTitle", "게시글 등록2")
+				.param("boardContent", "게시글 테스트2")
 				.param("memberId", "admin"); 
 		// request parameter 데이터 적용
 		try {
