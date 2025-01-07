@@ -1,5 +1,0 @@
-package com.yesfuture.ex01.service;
-
-public interface ReplyService {
-
-}

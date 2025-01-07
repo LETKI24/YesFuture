@@ -263,3 +263,4 @@
 0:0:0:0:0:0:0:1 - - [27/Dec/2024:16:36:34 +0900] "GET /ex01/reply/allQuestion/29 HTTP/1.1" 200 479
 0:0:0:0:0:0:0:1 - - [27/Dec/2024:16:36:53 +0900] "GET /ex01/boardReal/boardQuestion/boardQuestion HTTP/1.1" 200 6296
 0:0:0:0:0:0:0:1 - - [27/Dec/2024:16:38:13 +0900] "GET /ex01/boardReal/boardQuestion/problemMain HTTP/1.1" 404 721
+0:0:0:0:0:0:0:1 - - [27/Dec/2024:17:02:11 +0900] "GET /ex01/board/main HTTP/1.1" 200 3021

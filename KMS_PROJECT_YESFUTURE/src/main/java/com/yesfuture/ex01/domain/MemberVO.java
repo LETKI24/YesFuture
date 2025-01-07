@@ -21,10 +21,10 @@ public class MemberVO {
 	private String memberPw;
 	private String memberSchool;
 	private String memberPhone;
-	private int memberGrade; // 유료회원인지, 무료회원인지 / 의대생, 간호대생, 약대생 ...
-	private int memberStatus; // 멤버 회원 가입, 탈퇴 관련 상태
 	private Date memberDateCreated; // 회원 가입 날짜
 	private int memberSelected; // 질문 게시판에서 채택당한 횟수
+	private int memberEnabled; // 1은 활성계정, 2는 비활성계정(=회원탈퇴)
+	
 	
 	// 당장 안쓸거, 회원 생일, 소속병원
 //	private Date userBirthday;

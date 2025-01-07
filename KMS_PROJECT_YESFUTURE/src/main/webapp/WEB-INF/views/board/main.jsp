@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
-
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
     <style>
     
     	/* 경계선 스타일 */
@@ -68,23 +70,27 @@
 <body>
 	<h1>예스 퓨처~</h1>
 	
+	<sec:authentication property="principal" var="user"/>
+	
 	<div class="menu-bar">
         <!-- 이 위치에 main으로 가는 버튼 만들기 -->
         <a href="problemMain" class="group1"><input type="button" value="문제은행 가기"></a>
         <a href="../boardReal/boardMain" class="group1"><input type="button" value="게시판"></a>
 	
 		<div class="group2">
-			<c:if test="${empty sessionScope.memberEmail }">
-			<!-- 회원 가입 버튼 -->
-		    <a href="agree"><input type="button" value="회원 가입"></a>
-		    <!-- 로그인 버튼 -->
-		    <a href="login"><input type="button" value="로그인"></a>
-			</c:if>
-			
-			<c:if test="${not empty sessionScope.memberEmail }">
-			<a href="mypage"><input type="button" value="${sessionScope.memberNickname}"></a>
-			<a href="logout"><input type="button" value="로그아웃"></a>
-			</c:if>
+			<!-- 로그아웃 상태 -->
+			<sec:authorize access="isAnonymous()">
+			    <a href="agree">회원 가입</a>
+			    <a href="../auth/login">로그인</a>
+		    </sec:authorize>
+		    <!-- 로그인 상태 -->
+		    <sec:authorize access="isAuthenticated()">
+		        <a href="info"><sec:authentication property="principal.member.memberNickname"/></a>
+		        <form action="../auth/logout" method="post">
+		            <input type="submit" value="로그아웃">
+		            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+		        </form>
+		    </sec:authorize>
 		</div>
 	</div>
 	

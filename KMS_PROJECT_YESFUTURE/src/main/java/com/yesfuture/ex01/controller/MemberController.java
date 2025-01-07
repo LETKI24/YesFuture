@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/main")
 	public void main() {
@@ -52,9 +56,12 @@ public class MemberController {
 	public String joinPOST(MemberVO memberVO) {
 		log.info("joinPOST()");
 		log.info("memberVO = " + memberVO.toString());
+		// 비밀번호 암호화
+		String encPw = passwordEncoder.encode(memberVO.getMemberPw());
+		memberVO.setMemberPw(encPw); // 암호화된 데이터 적용
 		int result = memberService.createMember(memberVO);
 		log.info(result + "행 등록");
-		return "redirect:/board/main";
+		return "redirect:/auth/login";
 	}
 
 	@PostMapping("/nickname")
@@ -80,36 +87,36 @@ public class MemberController {
 	}
 
 	// login.jsp 페이지 호출
-	@GetMapping("/login")
-	public void loginGET() {
-		log.info("loginGET()");
-	}
+//	@GetMapping("/login")
+//	public void loginGET() {
+//		log.info("loginGET()");
+//	}
 
 	// login.jsp에서 전송받은 회원 데이터를 조회
-	@PostMapping("/login")
-	public String loginPOST(MemberVO memberVO, HttpSession session, Model model) {
-		log.info("loginPOST() 호출");
-
-		// 이메일과 비밀번호 검증
-		MemberVO verifyMember = memberService.verifyMember(memberVO);
-
-		if (verifyMember != null) { // 로그인 성공
-			log.info("로그인 성공: " + memberVO.getMemberEmail());
-			session.setAttribute("memberEmail", verifyMember.getMemberEmail()); // 세션에 이메일 저장
-			session.setAttribute("memberNickname", verifyMember.getMemberNickname()); // 세션에 닉네임 저장
-			session.setAttribute("memberId", verifyMember.getMemberId()); // 세션에 Id 저장
-			
-			log.info("memberEmail :" + session.getAttribute("memberEmail"));
-			log.info("memberNickname :" + session.getAttribute("memberNickname"));
-			
-			session.setMaxInactiveInterval(3600); // session 60분 설정
-			return "redirect:/board/main"; // 메인 페이지로 이동
-		} else { // 로그인 실패
-			log.info("로그인 실패: 이메일 또는 비밀번호 불일치");
-			model.addAttribute("loginError", "이메일 또는 비밀번호를 확인하세요.");
-			return "board/login"; // 로그인 페이지로 다시 이동
-		}
-	}
+//	@PostMapping("/login")
+//	public String loginPOST(MemberVO memberVO, HttpSession session, Model model) {
+//		log.info("loginPOST() 호출");
+//
+//		// 이메일과 비밀번호 검증
+//		MemberVO verifyMember = memberService.verifyMember(memberVO);
+//
+//		if (verifyMember != null) { // 로그인 성공
+//			log.info("로그인 성공: " + memberVO.getMemberEmail());
+//			session.setAttribute("memberEmail", verifyMember.getMemberEmail()); // 세션에 이메일 저장
+//			session.setAttribute("memberNickname", verifyMember.getMemberNickname()); // 세션에 닉네임 저장
+//			session.setAttribute("memberId", verifyMember.getMemberId()); // 세션에 Id 저장
+//			
+//			log.info("memberEmail :" + session.getAttribute("memberEmail"));
+//			log.info("memberNickname :" + session.getAttribute("memberNickname"));
+//			
+//			session.setMaxInactiveInterval(3600); // session 60분 설정
+//			return "redirect:/board/main"; // 메인 페이지로 이동
+//		} else { // 로그인 실패
+//			log.info("로그인 실패: 이메일 또는 비밀번호 불일치");
+//			model.addAttribute("loginError", "이메일 또는 비밀번호를 확인하세요.");
+//			return "board/login"; // 로그인 페이지로 다시 이동
+//		}
+//	}
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {

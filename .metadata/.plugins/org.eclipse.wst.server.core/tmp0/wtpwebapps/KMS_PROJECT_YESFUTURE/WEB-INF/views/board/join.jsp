@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- jquery 라이브러리 import -->
 <script src="https://code.jquery.com/jquery-3.7.1.js">
 	
@@ -74,9 +76,21 @@
 		
 		<input type="submit" id="submitButton" value="회원 가입" disabled>
 		
+		<!-- 스프링 시큐리티를 사용하면 모든 post 전송에 csrf 토큰을 추가해야 함 -->
+      	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	</form>
 
 	<script type="text/javascript">
+		// ajaxSend() : AJAX 요청이 전송되려고 할 때 실행할 함수를 지정
+		// ajax 요청을 보낼 때마다 CSRF 토큰을 요청 헤더에 추가하는 코드
+		$(document).ajaxSend(function(e, xhr, opt){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			xhr.setRequestHeader(header, token);
+		});
+		
+	
 		$(document).ready(function() {
 			
 			// 이메일 주소 합치기

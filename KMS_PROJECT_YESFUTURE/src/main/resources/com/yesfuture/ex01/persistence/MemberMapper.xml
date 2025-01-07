@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 샘 설명 <resultMap> : DB 쿼리 반환 데이터와 Entity(VO) 클래스의 멤버 변수 매핑을 정의하는 태그 
 		- 속성 : type : 연결할 클래스의 패키지와 이름 id : SQL 쿼리 정의 태그에서 인식되는 이름 -->
 	<!-- DB와 자바의 변수명 매칭 시키는 곳 - id는 DB쪽, type은 자바(VO)쪽 -->
-	<resultMap type="com.yesfuture.ex01.domain.MemberVO"
+	<resultMap type="com.yesfuture.ex01.domain.Member"
 		id="memberResultMap">
 		<!-- <id> : key 컬럼 매핑 태그(프라이머리 키 라는 뜻) <result> : 일반 컬럼 매핑 태그 - 속성 : property 
 			: Entity(VO) 멤버 변수 column : DB 테이블 컬럼 -->
@@ -22,12 +22,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberPw" column="MEMBER_PW" />
 		<result property="memberSchool" column="MEMBER_SCHOOL" />
 		<result property="memberPhone" column="MEMBER_PHONE" />
-		<result property="memberGrade" column="MEMBER_GRADE" />
-		<result property="memberStatus" column="MEMBER_STATUS" />
 		<result property="memberDateCreated"
 			column="MEMBER_DATE_CREATED" />
 		<result property="memberSelected" column="MEMBER_SELECTED" />
-
+		<result property="memberEnabled" column="MEMBER_ENABLED" />
+		
+	</resultMap>
+	
+	<resultMap type="com.yesfuture.ex01.domain.MemberRole"
+		id="roleResultMap">
+		<id property="memberRoleId" column="MEMBER_ROLE_ID" /> 
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberRoleName" column="MEMBER_ROLE_NAME" />
 	</resultMap>
 
 	<!-- <select>, <insert>, <update>, <delete> : SQL 쿼리 정의 태그 - 속성 : id : Mapper 
@@ -37,10 +43,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO MEMBER VALUES
 		(MEMBER_SEQ.NEXTVAL,
 		#{memberName}, #{memberNickname}, #{memberEmail},
-		#{memberPw}, #{memberSchool}, #{memberPhone}, 2, 1, SYSDATE, 0)
+		#{memberPw}, #{memberSchool}, #{memberPhone}, SYSDATE, 0, 1)
 	</insert>
 	<!-- #{변수명} : Mapper 인터페이스 메소드 매개변수와 매핑되어 전송된 데이터를 적용 -->
-
+	
+	<!-- 권한 정보 등록 -->
+	<insert id="insertMemberRole">
+		INSERT INTO MEMBER_ROLE	VALUES 
+		(MEMBER_ROLE_SEQ.NEXTVAL, #{memberEmail}, 'ROLE_FREE_MEMBER')
+	</insert>
+	
+	<!-- 회원 정보 조회 -->
+	<select id="selectMemberByMemberEmail" resultMap="memberResultMap">
+		SELECT * FROM MEMBER 
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
+	<!-- 권한 정보 조회 -->
+	<select id="selectRoleByMemberEmail" resultMap="roleResultMap">
+		SELECT * FROM MEMBER_ROLE
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+	
 	<select id="checkMemberNickname" parameterType="String"
 		resultType="Integer">
 		SELECT COUNT(*) FROM MEMBER WHERE MEMBER_NICKNAME = #{memberNickname}

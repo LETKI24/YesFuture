@@ -6,4 +6,5 @@
   <module moduleId="org.eclipse.jst.jee.server:Spring02" serverId="Tomcat v9.0 Server at localhost"/>
   <module moduleId="org.eclipse.jst.jee.server:KMS_PROJECT_YESFUTURE" serverId="Tomcat v9.0 Server at localhost"/>
   <module moduleId="org.eclipse.jst.jee.server:Spring03" serverId="Tomcat v9.0 Server at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:SpringFinal"/>
 </modules>
