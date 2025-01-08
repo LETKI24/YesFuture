@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yesfuture.ex01.domain.BoardFreeVO;
 import com.yesfuture.ex01.domain.BoardProposeVO;
@@ -99,11 +100,12 @@ public class BoardController {
 		log.info("registerQuestionGET()");
 	}
 
-	// /boardQuestion/registerQuestion.jsp에서 전송받은 게시글 데이터를 저장
+	// /boardQuestion/registerQuestion.jsp에서 게시글 데이터를 form-data를 전송받아 Service로 전송
 	@PostMapping("/boardQuestion/registerQuestion")
-	public String registerQuestionPOST(BoardQuestionVO boardQuestionVO) {
+	public String registerQuestionPOST(BoardQuestionVO boardQuestionVO, RedirectAttributes reAttr) {
 		log.info("registerQuestionPOST()");
 		log.info("boardQuestionVO = " + boardQuestionVO.toString());
+		
 		int result = boardService.createBoardQuestion(boardQuestionVO);
 		log.info(result + "행 등록");
 		return "redirect:/boardReal/boardQuestion/boardQuestion";

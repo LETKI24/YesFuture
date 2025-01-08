@@ -1,6 +1,8 @@
 package com.yesfuture.ex01.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +24,14 @@ public class BoardQuestionVO {
 	private Date boardQuestionDateCreated;
 	private int boardQuestionReplyCount;
 	private int boardQuestionHitCount;
+	
+	private List<AttachQuestionVO> attachQuestionList;
+	
+	public List<AttachQuestionVO> getAttachQuestionList() {
+		if(attachQuestionList == null) {
+			attachQuestionList = new ArrayList<AttachQuestionVO>();
+		}
+		return attachQuestionList;
+	}
+	
 }

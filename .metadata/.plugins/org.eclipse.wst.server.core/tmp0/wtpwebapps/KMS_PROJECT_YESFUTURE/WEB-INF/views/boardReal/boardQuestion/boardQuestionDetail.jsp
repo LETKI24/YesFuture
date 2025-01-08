@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -174,7 +175,7 @@ rel="stylesheet">
 	</div>
 	
 	<div style="text-align: center;">
-		<input type="text" id="memberNickname" value="${sessionScope.memberNickname}" readonly>
+		<input type="text" id="memberNickname" value="<sec:authentication property="principal.member.memberNickname"/>" readonly>
 		<input type="text" id="replyQuestionContent">
 		<button id="btnAdd">답글 달기</button>
 	</div>
@@ -201,13 +202,11 @@ rel="stylesheet">
 			$('#btnAdd').click(function(){
 				var boardQuestionId = ${boardQuestionVO.boardQuestionId}; // 게시판 번호 데이터
 				var memberNickname = $('#memberNickname').val(); // 작성자닉네임데이터
-				var memberId = ${sessionScope.memberId}; // 작성자Id 데이터
 				var replyQuestionContent = $('#replyQuestionContent').val(); // 답글 내용
 				// javascript 객체 생성
 				var obj = {
 						'boardQuestionId' : boardQuestionId,
 						'memberNickname' : memberNickname,
-						'memberId' : memberId,
 						'replyQuestionContent' : replyQuestionContent
 				}
 				console.log(obj);
@@ -288,33 +287,6 @@ rel="stylesheet">
 				); // end getJSON()
 			} // end getAllReply()
 			
-			
-			
-			
-			// 삭제 버튼을 클릭하면 선택된 댓글을 '삭제된 댓글입니다'로 수정
-			$('#replies').on('click', '.reply_item .btn_delete', function(){
-				console.log(this);
-				var boardQuestionId = ${boardQuestionVO.boardQuestionId};
-				var replyQuestionId = $(this).prevAll('#replyId').val();
-				var replyQuestionContent = "※※※삭제된 댓글입니다.※※※";
-				
-				// ajax 요청
-				$.ajax({
-					type : 'PUT', 
-					url : '../../reply/deleteQuestion/' + replyQuestionId + '/' + boardQuestionId, 
-					headers : {
-						'Content-Type' : 'application/json'
-					},
-					data : replyQuestionContent,
-					success : function(result) {
-						console.log(result);
-						if(result == 1) {
-							alert('댓글 삭제 성공!');
-							getAllReply();
-						}
-					}
-				});
-			}); // end replies.on()		
 		}); // end document
 	</script>
 

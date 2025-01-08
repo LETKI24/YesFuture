@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.yesfuture.ex01.domain.BoardQuestion;
 import com.yesfuture.ex01.domain.BoardQuestionVO;
 import com.yesfuture.ex01.util.Pagination;
 
@@ -16,7 +17,7 @@ public interface BoardQuestionMapper {
 	int selectQuestionTotalCount();
 	
 	BoardQuestionVO selectOne(Integer boardQuestionId);
-	int insert(BoardQuestionVO boardQuestionVO);
+	int insert(BoardQuestion boardQuestion);
 	int update(BoardQuestionVO boardQuestionVO);
 	int delete(int boardQuestionId);
 	

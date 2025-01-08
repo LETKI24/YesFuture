@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace : 연결할 Mapper 인터페이스 경로 및 이름 -->
+<mapper namespace="com.yesfuture.ex01.persistence.AttachQuestionMapper">
+
+	<resultMap type="com.yesfuture.ex01.domain.AttachQuestion"
+		id="attachResultMap">
+		
+		<id property="attachQuestionId" column="ATTACH_QUESTION_ID" /> 
+		<result property="boardQuestionId" column="BOARD_QUESTION_ID" />
+		<result property="attachQuestionPath" column="ATTACH_QUESTION_PATH" />
+		<result property="attachQuestionRealName" column="ATTACH_QUESTION_REAL_NAME" />
+		<result property="attachQuestionChgName" column="ATTACH_QUESTION_CHG_NAME" />
+		<result property="attachQuestionExtension" column="ATTACH_QUESTION_EXTENSION"/>
+		<result property="attachQuestionDateCreated" column="ATTACH_QUESTION_DATE_CREATED"/>
+	</resultMap>
+
+	<insert id="insert">
+		INSERT INTO ATTACH_QUESTION
+		VALUES (ATTACH_QUESTION_SEQ.NEXTVAL, BOARD_QUESTION_SEQ.CURRVAL, #{attachQuestionPath}, 
+		#{attachQuestionRealName}, #{attachQuestionChgName}, #{attachQuestionExtension}, SYSDATE)
+	</insert>
+
+	
+	<select id="selectByBoardQuestionId" resultMap="attachResultMap">
+		SELECT * FROM ATTACH_QUESTION
+		WHERE BOARD_QUESTION_ID = #{boardQuestionId}
+	</select>
+	
+	<select id="selectByAttachQuestionId" resultMap="attachResultMap">
+		SELECT * FROM ATTACH_QUESTION 
+		WHERE ATTACH_QUESTION_ID = #{attachQuestionId}
+	</select>
+	
+
+</mapper>
