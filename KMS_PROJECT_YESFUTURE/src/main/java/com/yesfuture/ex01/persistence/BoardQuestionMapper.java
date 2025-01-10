@@ -16,9 +16,9 @@ public interface BoardQuestionMapper {
 	List<BoardQuestionVO> selectQuestionListByPagination(Pagination pagination);
 	int selectQuestionTotalCount();
 	
-	BoardQuestionVO selectOne(Integer boardQuestionId);
+	BoardQuestion selectOne(int boardQuestionId);
 	int insert(BoardQuestion boardQuestion);
-	int update(BoardQuestionVO boardQuestionVO);
+	int update(BoardQuestion boardQuestion);
 	int delete(int boardQuestionId);
 	
 	int updateReplyCount (@Param("boardQuestionId") int boardQuestionId, @Param("amount") int amount); 

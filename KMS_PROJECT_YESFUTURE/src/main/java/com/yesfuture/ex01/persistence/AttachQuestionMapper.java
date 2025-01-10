@@ -11,4 +11,6 @@ public interface AttachQuestionMapper {
     int insert(AttachQuestion attachQuestion);
     List<AttachQuestion> selectByBoardQuestionId(int boardQuestionId);
     AttachQuestion selectByAttachQuestionId(int attachQuestionId);
+	int insertModify(AttachQuestion attachQuestion);
+	int delete(int boardQuestionId);
 }

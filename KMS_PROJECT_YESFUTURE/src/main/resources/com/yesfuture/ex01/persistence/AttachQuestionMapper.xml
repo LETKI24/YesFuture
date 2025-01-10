@@ -23,7 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (ATTACH_QUESTION_SEQ.NEXTVAL, BOARD_QUESTION_SEQ.CURRVAL, #{attachQuestionPath}, 
 		#{attachQuestionRealName}, #{attachQuestionChgName}, #{attachQuestionExtension}, SYSDATE)
 	</insert>
-
+	
+	<insert id="insertModify">
+		INSERT INTO ATTACH_QUESTION 
+		VALUES (ATTACH_QUESTION_SEQ.NEXTVAL, #{boardQuestionId}, #{attachQuestionPath},
+		 #{attachQuestionRealName}, #{attachQuestionChgName}, #{attachQuestionExtension}, SYSDATE)
+	</insert>
 	
 	<select id="selectByBoardQuestionId" resultMap="attachResultMap">
 		SELECT * FROM ATTACH_QUESTION
@@ -35,5 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ATTACH_QUESTION_ID = #{attachQuestionId}
 	</select>
 	
+	<delete id="delete">
+		DELETE FROM ATTACH_QUESTION
+		WHERE BOARD_QUESTION_ID = #{boardQuestionId}
+	</delete>
 
 </mapper>

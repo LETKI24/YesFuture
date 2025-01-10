@@ -15,10 +15,10 @@ public interface BoardService {
 
 	List<BoardQuestionVO> getQuestionPagingBoards(Pagination pagination);
 	int getQuestionTotalCount();
-	BoardQuestionVO getBoardQuestionById(Integer boardQuestionId);
+	BoardQuestionVO getBoardQuestionById(int boardQuestionId);
 	int createBoardQuestion(BoardQuestionVO boardQuestionVO);
 	int updateBoardQuestion(BoardQuestionVO boardQuestionVO);
-	int deleteBoardQuestion(Integer boardQuestionId);
+	int deleteBoardQuestion(int boardQuestionId);
 	
 	
 	

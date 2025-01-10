@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		id : SQL 쿼리 정의 태그에서 인식되는 이름
 	 -->
 	 <!-- DB와 자바의 변수명 매칭 시키는 곳 - id는 DB쪽, type은 자바(VO)쪽 -->
-	<resultMap type="com.yesfuture.ex01.domain.BoardQuestionVO" id="boardQuestionResultMap">
+	<resultMap type="com.yesfuture.ex01.domain.BoardQuestion" id="boardQuestionResultMap">
 		<!-- 
 			<id> : key 컬럼 매핑 태그(프라이머리 키 라는 뜻)
 			<result> : 일반 컬럼 매핑 태그
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ]]>
 	 </select>
 	 
-	 <select id="selectOne" resultMap="boardQuestionResultMap"> <!-- resultMap=DB에서 가져온걸 VO로 던져주고 매칭시키는거 -->
+	 <select id="selectOne" resultMap="boardQuestionResultMap"> <!-- resultMap=DB에서 가져온걸 VO(첨부파일부턴 boardQuestion)로 던져주고 매칭시키는거 -->
 	 	SELECT * FROM BOARD_QUESTION WHERE BOARD_QUESTION_ID = #{boardQuestionId}
 	 </select>
 	 

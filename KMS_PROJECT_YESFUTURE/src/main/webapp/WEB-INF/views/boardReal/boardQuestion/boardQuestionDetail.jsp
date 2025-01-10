@@ -12,6 +12,12 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
 rel="stylesheet">
 
+<!-- css 파일 불러오기 -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/resources/css/image.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/resources/css/attach.css">
+
 <style type="text/css">
 	    /* 경계선 스타일 */
 	    .divider {
@@ -164,14 +170,66 @@ rel="stylesheet">
 		</div>
 		
 		<button onclick="location.href='boardQuestion'">글 목록</button>
-		<c:if test="${sessionScope.memberNickname eq boardQuestionVO.memberNickname }">
-		<button onclick="location.href='updateQuestion?boardQuestionId=${boardQuestionVO.boardQuestionId}'">
-		글 수정</button>
-		<button id="deleteBoard">글 삭제</button>
-		<form id="deleteForm" action="deleteQuestion" method="POST">
-			<input type="hidden" name="boardQuestionId" value="${boardQuestionVO.boardQuestionId }">
-		</form>
-		</c:if>
+		<sec:authentication property="principal" var="user"/>	
+		<sec:authorize access="isAuthenticated()">
+			<c:if test="${boardQuestionVO.memberNickname eq user.member.memberNickname}">
+				<button id="modify">글 수정</button>
+				<button id="delete">글 삭제</button>		
+			</c:if>
+		</sec:authorize>
+	</div>
+	
+	<form id="modifyForm" action="modifyQuestion" method="GET">
+		<input type="hidden" name="boardQuestionId">
+	</form>
+	<form id="deleteForm" action="deleteQuestion" method="POST">
+		<input type="hidden" name="boardQuestionId">
+    	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	</form>
+	
+	<!-- 이미지 파일 영역 -->
+	<div class="image-upload">
+		<div class="image-view">
+			<h2>이미지 파일 리스트</h2>
+			<div class="image-list">
+				<!-- 이미지 파일 처리 코드 -->
+				<c:forEach var="attachQuestionVO" items="${boardQuestionVO.attachQuestionList}">
+				    <c:if test="${attachQuestionVO.attachQuestionExtension eq 'jpg' or 
+				    			  attachQuestionVO.attachQuestionExtension eq 'jpeg' or 
+				    			  attachQuestionVO.attachQuestionExtension eq 'png' or 
+				    			  attachQuestionVO.attachQuestionExtension eq 'gif'}">
+				        <div class="image_item">
+				        	<a href="../../image/get?attachQuestionId=${attachQuestionVO.attachQuestionId }"
+				        		 target="_blank">
+				        	<!-- 아래 img는 썸네일 관련 코드 -->
+					        <img width="100px" height="100px" 
+					        src="../../image/get?attachQuestionId=${attachQuestionVO.attachQuestionId }
+					        	&attachQuestionExtension=${attachQuestionVO.attachQuestionExtension}"/>
+					        </a>
+				        </div>
+				    </c:if>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 첨부 파일 영역 -->
+	<div class="attach-upload">
+		<div class="attach-view">
+			<h2>첨부 파일 리스트</h2>
+			<div class="attach-list">
+			<c:forEach var="attachQuestionVO" items="${boardQuestionVO.attachQuestionList}">
+		 		<c:if test="${not (attachQuestionVO.attachQuestionExtension eq 'jpg' or 
+			    			  attachQuestionVO.attachQuestionExtension eq 'jpeg' or 
+			    			  attachQuestionVO.attachQuestionExtension eq 'png' or 
+			    			  attachQuestionVO.attachQuestionExtension eq 'gif')}">
+			    	<div class="attach_item">
+			    	<p><a href="../../attach/download?attachQuestionId=${attachQuestionVO.attachQuestionId }">${attachQuestionVO.attachQuestionRealName }.${attachQuestionVO.attachQuestionExtension }</a></p>
+			    	</div>
+			    </c:if>
+			</c:forEach>
+			</div>
+		</div>
 	</div>
 	
 	<div style="text-align: center;">
@@ -187,11 +245,35 @@ rel="stylesheet">
 	</div>
 	
 	<script type="text/javascript">
+		
+		$(document).ajaxSend(function(e, xhr, opt){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			xhr.setRequestHeader(header, token);
+		});
+	
+	
 		$(document).ready(function(){
 			
-			// 게시글 삭제 관련 기능
-			$('#deleteBoard').click(function(){
+			// 게시글 수정
+			$('#modify').click(function(){
+				var modifyForm = $("#modifyForm"); // form 객체 참조
+				var boardId = "<c:out value='${boardQuestionVO.boardQuestionId}' />";
+				// 게시글 번호를 input name='boardQuestionId' 값으로 적용
+				modifyForm.find("input[name='boardQuestionId']").val(boardId);	
+				
+				$('#modifyForm').submit();
+			})
+			
+			// 게시글 삭제
+			$('#delete').click(function(){
 				if(confirm('삭제하시겠습니까?')){
+					var deleteForm = $("#deleteForm"); // form 객체 참조
+					var boardId = "<c:out value='${boardQuestionVO.boardQuestionId}' />";
+					// 게시글 번호를 input name='boardQuestionId' 값으로 적용
+					deleteForm.find("input[name='boardQuestionId']").val(boardId);	
+					
 					$('#deleteForm').submit(); // form 데이터 전송
 				}
 			}); // end deleteBoard
@@ -203,6 +285,12 @@ rel="stylesheet">
 				var boardQuestionId = ${boardQuestionVO.boardQuestionId}; // 게시판 번호 데이터
 				var memberNickname = $('#memberNickname').val(); // 작성자닉네임데이터
 				var replyQuestionContent = $('#replyQuestionContent').val(); // 답글 내용
+				
+				if(replyQuestionContent.trim() === '') {
+					alert('내용을 입력해 주세요.');
+					return;
+				}
+				
 				// javascript 객체 생성
 				var obj = {
 						'boardQuestionId' : boardQuestionId,

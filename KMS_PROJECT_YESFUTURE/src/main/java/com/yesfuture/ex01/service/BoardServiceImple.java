@@ -1,6 +1,7 @@
 package com.yesfuture.ex01.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,11 +68,19 @@ public class BoardServiceImple implements BoardService{
 		log.info("getQuestionTotalCount()");
 		return boardQuestionMapper.selectQuestionTotalCount();
 	}
-
+	
+	@Transactional(value = "transactionManager")
 	@Override
-	public BoardQuestionVO getBoardQuestionById(Integer boardQuestionId) {
+	public BoardQuestionVO getBoardQuestionById(int boardQuestionId) {
 		log.info("getBoardQuestionById");
-		return boardQuestionMapper.selectOne(boardQuestionId);
+		BoardQuestion boardQuestion = boardQuestionMapper.selectOne(boardQuestionId);
+		List<AttachQuestion> list = attachQuestionMapper.selectByBoardQuestionId(boardQuestionId);
+		BoardQuestionVO boardQuestionVO = toVO(boardQuestion);
+		
+		List<AttachQuestionVO> attachList = list.stream().map(this::toVO).collect(Collectors.toList());
+		
+		boardQuestionVO.setAttachQuestionList(attachList);
+		return boardQuestionVO;
 	}
 	
 	@Transactional(value = "transactionManager") 
@@ -92,17 +101,40 @@ public class BoardServiceImple implements BoardService{
 		return 1;
 	}
 
+	@Transactional(value = "transactionManager") 
 	@Override
 	public int updateBoardQuestion(BoardQuestionVO boardQuestionVO) {
 		log.info("updateBoardQuestion()");
-		return boardQuestionMapper.update(boardQuestionVO);
-	}
+		log.info("boardQuestionVO = " + boardQuestionVO);
+		int updateBoardQuestionResult = boardQuestionMapper.update(toEntity(boardQuestionVO));
+		log.info(updateBoardQuestionResult + "행 게시글 정보 수정");
+		
+		int deleteAttachQuestionResult = attachQuestionMapper.delete(boardQuestionVO.getBoardQuestionId());
+		log.info(deleteAttachQuestionResult + "행 파일 정보 삭제");
+		
+		List<AttachQuestionVO> attachQuestionList = boardQuestionVO.getAttachQuestionList();
+		
+		int insertAttachQuestionResult = 0;
+		for(AttachQuestionVO attachQuestionVO : attachQuestionList) {
+			attachQuestionVO.setBoardQuestionId(boardQuestionVO.getBoardQuestionId()); // 게시글 번호 적용
+			insertAttachQuestionResult += attachQuestionMapper.insertModify(toEntity(attachQuestionVO));
+		}
+		log.info(insertAttachQuestionResult + "행 파일 정보 등록");
+		return 1;
+	} // end updateBoardQuestion()
 
+	@Transactional(value = "transactionManager") 
 	@Override
-	public int deleteBoardQuestion(Integer boardQuestionId) {
+	public int deleteBoardQuestion(int boardQuestionId) {
 		log.info("deleteBoardQuestion()");
-		return boardQuestionMapper.delete(boardQuestionId);
-	}
+		int deleteBoardQuestionResult = boardQuestionMapper.delete(boardQuestionId);
+		log.info(deleteBoardQuestionResult + "행 게시글 정보 삭제");
+		
+		int deleteAttachResult = attachQuestionMapper.delete(boardQuestionId);
+		log.info(deleteAttachResult + "행 파일 정보 삭제");
+		
+		return 1;
+	} // end deleteBoardQuestion()
 	
 	// BoardQuestionVO 데이터를 BoardQuestion에 적용하는 메서드
 	public BoardQuestion toEntity(BoardQuestionVO boardQuestionVO) {
@@ -118,6 +150,20 @@ public class BoardServiceImple implements BoardService{
 		return boardQuestion;
 	} // end toEntity()
 	
+	// BoardQuestion 데이터를 BoardQuestionVO에 적용하는 메서드
+	public BoardQuestionVO toVO(BoardQuestion boardQuestion) {
+		BoardQuestionVO boardQuestionVO = new BoardQuestionVO();
+		boardQuestionVO.setBoardQuestionId(boardQuestion.getBoardQuestionId());
+		boardQuestionVO.setBoardQuestionTitle(boardQuestion.getBoardQuestionTitle());
+		boardQuestionVO.setBoardQuestionContent(boardQuestion.getBoardQuestionContent());
+		boardQuestionVO.setMemberNickname(boardQuestion.getMemberNickname());
+		boardQuestionVO.setMemberId(boardQuestion.getMemberId());
+		boardQuestionVO.setBoardQuestionDateCreated(boardQuestion.getBoardQuestionDateCreated());
+		boardQuestionVO.setBoardQuestionReplyCount(boardQuestion.getBoardQuestionReplyCount());
+		boardQuestionVO.setBoardQuestionHitCount(boardQuestion.getBoardQuestionHitCount());
+		return boardQuestionVO;
+	} // end toVO()
+	
     // AttachQuestionVO를 AttachQuestion로 변환하는 메서드
     private AttachQuestion toEntity(AttachQuestionVO attachQuestionVO) {
         AttachQuestion attachQuestion = new AttachQuestion();
@@ -129,6 +175,19 @@ public class BoardServiceImple implements BoardService{
         attachQuestion.setAttachQuestionExtension(attachQuestionVO.getAttachQuestionExtension());
         attachQuestion.setAttachQuestionDateCreated(attachQuestionVO.getAttachQuestionDateCreated());
         return attachQuestion;
+    }
+    
+    // AttachQuestion를 AttachQuestionVO로 변환하는 메서드
+    private AttachQuestionVO toVO(AttachQuestion attachQuestion) {
+        AttachQuestionVO attachQuestionVO = new AttachQuestionVO();
+        attachQuestionVO.setAttachQuestionId(attachQuestion.getAttachQuestionId());
+        attachQuestionVO.setBoardQuestionId(attachQuestion.getBoardQuestionId());
+        attachQuestionVO.setAttachQuestionPath(attachQuestion.getAttachQuestionPath());
+        attachQuestionVO.setAttachQuestionRealName(attachQuestion.getAttachQuestionRealName());
+        attachQuestionVO.setAttachQuestionChgName(attachQuestion.getAttachQuestionChgName());
+        attachQuestionVO.setAttachQuestionExtension(attachQuestion.getAttachQuestionExtension());
+        attachQuestionVO.setAttachQuestionDateCreated(attachQuestion.getAttachQuestionDateCreated());
+        return attachQuestionVO;
     }
 
 }

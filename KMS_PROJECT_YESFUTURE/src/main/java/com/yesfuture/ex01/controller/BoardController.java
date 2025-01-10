@@ -112,17 +112,18 @@ public class BoardController {
 	}
 	
 	// 조회된 게시글 데이터를 /boardQuestion/modifyQeustion.jsp로 전송
-	@GetMapping("/boardQuestion/updateQuestion")
-	public void updateQuestionGET(Model model, Integer boardQuestionId) {
-		log.info("updateQuestionGET()");
+	@GetMapping("/boardQuestion/modifyQuestion")
+	public void modifyQuestionGET(Model model, Integer boardQuestionId) {
+		log.info("modifyQuestionGET()");
+		log.info("boardQuestionId = " + boardQuestionId);
 		BoardQuestionVO boardQuestionVO = boardService.getBoardQuestionById(boardQuestionId);
 		model.addAttribute("boardQuestionVO", boardQuestionVO);
 	}
 
 	// /boardQuestion/modify.jsp에서 데이터를 전송받아 게시글 수정
-	@PostMapping("/boardQuestion/updateQuestion")
-	public String updateQuestionPOST(BoardQuestionVO boardQuestionVO) {
-		log.info("updateQuestionPOST()");
+	@PostMapping("/boardQuestion/modifyQuestion")
+	public String modifyQuestionPOST(BoardQuestionVO boardQuestionVO) {
+		log.info("modifyQuestionPOST()");
 		int result = boardService.updateBoardQuestion(boardQuestionVO);
 		log.info(result + " 행 수정");
 		return "redirect:/boardReal/boardQuestion/boardQuestion";

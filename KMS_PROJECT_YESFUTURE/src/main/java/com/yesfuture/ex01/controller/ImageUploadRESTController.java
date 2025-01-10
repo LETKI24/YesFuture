@@ -127,7 +127,6 @@ public class ImageUploadRESTController {
 			Path path = Paths.get(savedPath);
 			byte[] imageBytes = Files.readAllBytes(path);
 
-
 			Path extensionPath = Paths.get("." + attachQuestionVO.getAttachQuestionExtension());
 			// 이미지의 MIME 타입 확인하여 적절한 Content-Type 지정
 			String contentType = Files.probeContentType(extensionPath);
