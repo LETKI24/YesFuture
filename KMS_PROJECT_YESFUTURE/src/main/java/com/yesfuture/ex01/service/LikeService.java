@@ -4,6 +4,8 @@ import com.yesfuture.ex01.domain.LikeQuestionVO;
 
 public interface LikeService {
 
-	int likeQuestion(LikeQuestionVO likeQuestionVO);
+	boolean likeQuestion(LikeQuestionVO likeQuestionVO);
+
+	boolean isLikedByUser(int replyQuestionId, String memberNickname);
 
 }

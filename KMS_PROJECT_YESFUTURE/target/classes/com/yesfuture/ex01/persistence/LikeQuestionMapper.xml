@@ -1,1 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.LikeQuestionMapper">
+	<resultMap type="com.yesfuture.ex01.domain.LikeQuestionVO" id="replyResultMap">
+      <id property="likeQuestionId" column="LIKE_QUESTION_ID" /> 
+      <result property="replyQuestionId" column="REPLY_QUESTION_ID" /> 
+      <result property="memberNickname" column="MEMBER_NICKNAME" />
+      <result property="likeQuestionDateCreated" column="LIKE_QUESTION_DATE_CREATED" />
+      <result property="likeQuestionType" column="LIKE_QUESTION_TYPE" />
+    </resultMap>
+   
+	<insert id="insertLike">
+      INSERT INTO LIKE_QUESTION 
+      VALUES (LIKE_QUESTION_SEQ.NEXTVAL, #{replyQuestionId}, #{memberNickname}, SYSDATE, 1)
+	</insert>
+
+	<insert id="insertHate">
+      INSERT INTO LIKE_QUESTION 
+      VALUES (LIKE_QUESTION_SEQ.NEXTVAL, #{replyQuestionId}, #{memberNickname}, SYSDATE, -1)
+	</insert>
+	
+	<delete id="cancelLike">
+	  DELETE FROM LIKE_QUESTION
+      WHERE REPLY_QUESTION_ID = #{replyQuestionId} AND MEMBER_NICKNAME = #{memberNickname}
+	</delete>
+	
+	<select id="checkLikeExist" resultType="int">
+	  SELECT COUNT(*)
+	  FROM LIKE_QUESTION
+	  WHERE REPLY_QUESTION_ID = #{replyQuestionId} AND MEMBER_NICKNAME = #{memberNickname}
+	</select>
+
+</mapper>

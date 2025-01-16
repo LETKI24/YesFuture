@@ -111,6 +111,12 @@ rel="stylesheet">
 		    text-stroke: 1px red; /* 테두리는 빨간색 */
 		}
 		
+		.reply_item .btn_like.liked i {
+		    color: red; /* 내부 빨간색 */
+		    -webkit-text-stroke: 0; /* 테두리 없음 */
+		    text-stroke: 0; /* 테두리 없음 */
+		}
+		
 		.reply_item .btn_hate i {
 			color: transparent; /* 내부는 투명 */
 		    -webkit-text-stroke: 1px blue; /* 테두리는 빨간색 */
@@ -119,6 +125,12 @@ rel="stylesheet">
 		
 		.reply_item .btn_like:hover i {
 		    color: red; /* 좋아요 아이콘 호버 색상 */
+		}
+		
+		.reply_item .btn_like.liked:hover i {
+		    color: red; /* 좋아요 아이콘 호버 색상 */
+		    -webkit-text-stroke: 1px black; /* 테두리 없음 */
+		    text-stroke: 1px black; /* 테두리 없음 */
 		}
 		
 		.reply_item .btn_hate:hover i {
@@ -342,13 +354,19 @@ rel="stylesheet">
 						
 						// $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수
 						$(data).each(function(){
+							var isLikedByCurrentUser = this.likedByCurrentUser; // 서버에서 전달받은 좋아요정보
+							console.log("isLikedByCurrentUser : " + isLikedByCurrentUser);
 							// this : 컬렉션의 각 인덱스 데이터를 의미
 							console.log(this);
 						  	
 							var replyQuestionId = this.replyQuestionId;
 							// 전송된 replyDateCreated는 문자열 형태이므로 날짜 형태로 변환이 필요
 							var replyQuestionDateCreated = new Date(this.replyQuestionDateCreated);
-
+							
+							// 좋아요 버튼 스타일 결정
+				            var likeButtonClass = isLikedByCurrentUser ? 'btn_like liked' : 'btn_like';
+				            console.log("likeButtonClass : " + likeButtonClass);
+				            
 							list += '<div class="reply_item">'
 								+ '<pre>'
 								+ '<input type="hidden" id="replyQuestionId" value="'+ this.replyQuestionId +'">'
@@ -364,7 +382,7 @@ rel="stylesheet">
 								+ '<span style="color:blue;">'+ this.replyQuestionHate +'</span>'
 								+ '&nbsp;&nbsp;'
 								+ '&nbsp;&nbsp;'
-								+ '<button class="btn_like"><i class="fas fa-thumbs-up"></i></button>'
+								+ '<button class="'+ likeButtonClass +'"><i class="fas fa-thumbs-up"></i></button>'
 								+ '&nbsp;&nbsp;'
 								+ '<button class="btn_hate"><i class="fas fa-thumbs-down"></i></button>'
 								+ '&nbsp;&nbsp;'
@@ -496,8 +514,9 @@ rel="stylesheet">
 		    });
 			
 		    // 좋아요 버튼
-		    $('#replies').on('click', '.btn_Like', function() {
-		        var memberNickname = $('#memberNickname').value;
+		    $('#replies').on('click', '.btn_like', function() {
+		    	var $this = $(this); // 클릭된 버튼
+		        var memberNickname = $('#memberNickname').val();
 		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
 		        
 		     	// javascript 객체 생성
@@ -514,13 +533,20 @@ rel="stylesheet">
 		            headers: { 'Content-Type': 'application/json' },
 		            data: JSON.stringify(obj),
 		            success: function(result) {
-		                if (result == 1) {
-		                	alert('좋아요~');
-
-		                    // 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
+		            	console.log("Response from server : " + result);
+		                if (result === "success") {
+		                    alert("좋아요를 눌렀습니다.");
+		                    // 좋아요 버튼 UI 업데이트 (예: 버튼 색 변경)
+		    				// 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
+		                    $this.addClass('liked');
+		                } else if (result === "cancel") {
+		                    alert("좋아요를 취소했습니다.");
+		                    // 좋아요 취소 UI 업데이트 (예: 버튼 색 복원)
+		    				// 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
+		                    $this.removeClass('liked');
 		                }
 		            }
-		        });
+		        }); // end ajax
 		    });
 		    
 		    // 싫어요 버튼

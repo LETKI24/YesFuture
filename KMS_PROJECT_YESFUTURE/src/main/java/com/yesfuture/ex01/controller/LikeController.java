@@ -22,11 +22,18 @@ public class LikeController {
 	private LikeService likeService;
 
 	@PostMapping("/replyLike") // POST : 댓글 좋아요
-	public ResponseEntity<Integer> likeReplyQuestion(@RequestBody LikeQuestionVO likeQuestionVO) {
+	public ResponseEntity<String> likeReplyQuestion(@RequestBody LikeQuestionVO likeQuestionVO) {
 		// JSON으로 전송된 replyQuestionVO가 여기 온다-@RequestBody ReplyVO replyVO
 		log.info("likeReplyQuestion()");
-
-		int result = likeService.likeQuestion(likeQuestionVO);
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		
+		boolean likeExist = likeService.likeQuestion(likeQuestionVO); 
+		log.info("likeExist : " + likeExist);
+		
+		
+        if (likeExist) {
+            return ResponseEntity.ok("success");
+        } else {
+            return ResponseEntity.ok("cancel");
+        }
 	}
 }

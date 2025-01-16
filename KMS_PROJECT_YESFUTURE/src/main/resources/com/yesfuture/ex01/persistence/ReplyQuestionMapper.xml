@@ -28,5 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       ORDER BY REPLY_QUESTION_ID
 	</select>
 
+	<update id="updateLikeCount">
+  	  UPDATE REPLY_QUESTION
+	  SET REPLY_QUESTION_LIKE = REPLY_QUESTION_LIKE + #{amount}
+	  WHERE REPLY_QUESTION_ID = #{replyQuestionId}
+	  <!-- 보내는 쪽에서 맵형식으로 해서 보내줘야한다, 2개 보내는거고 amount는 VO에 없으니까 >> ReplyMapper.java ㄱㄱ -->
+	</update>
 
 </mapper>
