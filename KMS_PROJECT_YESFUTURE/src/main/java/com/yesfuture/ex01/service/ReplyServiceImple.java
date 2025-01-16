@@ -22,11 +22,11 @@ public class ReplyServiceImple implements ReplyService {
 	@Autowired
 	private BoardQuestionMapper boardQuestionMapper;
 	
-	@Transactional(value = "transactionalManagaer") 
+	@Transactional(value = "transactionManager") 
 	// transactionManager가 관리 (create랑 delete에만 쓴다)(문제가 생겼을 때 롤백해주는 기능)
 	// 댓글 추가라는게 게시글(댓글갯수) 에도 영향을 줄 때 Transaction을 쓴다.
 	// 만드는 기능에 따라 DB를 만들어라
-	
+
 	@Override
 	public int createReplyQuestion(ReplyQuestionVO replyQuestionVO) {
 		// 댓글을 추가하면 REPLY 테이블에 댓글(데이터)이 등록되고,
@@ -58,7 +58,7 @@ public class ReplyServiceImple implements ReplyService {
 	
 	
 	
-//	@Transactional(value = "transactionalManagaer") // transactionManager가 관리
+//	@Transactional(value = "transactionManager") // transactionManager가 관리
 //	@Override
 //	public int deleteReplyQuestion(int replyQuestionId, int boardQuestionId, String replyQuestionContent) {
 //		log.info("deleteReply()");

@@ -6,8 +6,14 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="attach_item"/>
+		<item key="selection" value="$(&apos;#replies&apos;).html(list);"/>
 		<list key="findhistory">
+			<item value="$(&apos;#replies&apos;).html(list);"/>
+			<item value="replyList"/>
+			<item value="function("/>
+			<item value="Array"/>
+			<item value="array"/>
+			<item value="?"/>
 			<item value="attach_item"/>
 			<item value="net"/>
 			<item value="attachQuestionVOFile-list"/>
@@ -17,12 +23,6 @@
 			<item value="attachList"/>
 			<item value="attachInput"/>
 			<item value="image_item"/>
-			<item value="image-list"/>
-			<item value="&lt;input&gt;"/>
-			<item value="attachDTOImg-list"/>
-			<item value="attachService"/>
-			<item value=".input-attach-list"/>
-			<item value="toDTO"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.SubReplyQuestionMapper">
+	<resultMap type="com.yesfuture.ex01.domain.SubReplyQuestionVO" id="subReplyResultMap">
+      <id property="subReplyQuestionId" column="SUB_REPLY_Q_ID" /> 
+      <result property="replyQuestionId" column="REPLY_QUESTION_ID" /> 
+      <result property="memberNickname" column="MEMBER_NICKNAME" />
+      <result property="memberId" column="MEMBER_ID" />
+      <result property="subReplyQuestionContent" column="SUB_REPLY_Q_CONTENT" />
+      <result property="subReplyQuestionDateCreated" column="SUB_REPLY_Q_DATE_CREATED" />
+      <result property="subReplyQuestionLike" column="SUB_REPLY_Q_LIKE" />
+      <result property="subReplyQuestionHate" column="SUB_REPLY_Q_HATE" />
+    </resultMap>
+   
+	<insert id="insert">
+      INSERT INTO SUB_REPLY_QUESTION 
+      VALUES (SUB_REPLY_QUESTION_SEQ.NEXTVAL, #{replyQuestionId}, #{memberNickname}, #{memberId},
+       #{subReplyQuestionContent}, SYSDATE, 0, 0)
+	</insert>
+
+	<select id="selectListByReplyId" resultMap="subReplyResultMap">
+      SELECT * FROM SUB_REPLY_QUESTION
+      WHERE REPLY_QUESTION_ID = #{replyQuestionId}
+      ORDER BY SUB_REPLY_Q_ID
+	</select>
+
+
+</mapper>

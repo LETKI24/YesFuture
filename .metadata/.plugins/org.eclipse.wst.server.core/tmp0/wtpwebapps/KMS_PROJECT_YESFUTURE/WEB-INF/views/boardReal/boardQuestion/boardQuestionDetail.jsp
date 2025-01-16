@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- jquery 라이브러리 import -->
 <script src="https://code.jquery.com/jquery-3.7.1.js">
 </script>
@@ -234,8 +237,9 @@ rel="stylesheet">
 	
 	<div style="text-align: center;">
 		<input type="text" id="memberNickname" value="<sec:authentication property="principal.member.memberNickname"/>" readonly>
+		<input type="hidden" id="memberId" value="<sec:authentication property="principal.member.memberId"/>" readonly>
 		<input type="text" id="replyQuestionContent">
-		<button id="btnAdd">답글 달기</button>
+		<button id="btnAdd">댓글 달기</button>
 	</div>
 	
 	<hr>
@@ -280,11 +284,12 @@ rel="stylesheet">
 			
 			getAllReply(); // 함수 호출		
 			
-			// 답글 작성 기능
+			// 댓글 작성 기능
 			$('#btnAdd').click(function(){
 				var boardQuestionId = ${boardQuestionVO.boardQuestionId}; // 게시판 번호 데이터
 				var memberNickname = $('#memberNickname').val(); // 작성자닉네임데이터
-				var replyQuestionContent = $('#replyQuestionContent').val(); // 답글 내용
+				var memberId = $('#memberId').val(); // 작성자Id 데이터
+				var replyQuestionContent = $('#replyQuestionContent').val(); // 댓글 내용
 				
 				if(replyQuestionContent.trim() === '') {
 					alert('내용을 입력해 주세요.');
@@ -295,6 +300,7 @@ rel="stylesheet">
 				var obj = {
 						'boardQuestionId' : boardQuestionId,
 						'memberNickname' : memberNickname,
+						'memberId' : memberId,
 						'replyQuestionContent' : replyQuestionContent
 				}
 				console.log(obj);
@@ -310,18 +316,20 @@ rel="stylesheet">
 					success : function(result) { // 전송 성공 시 서버에서 result 값 전송
 						console.log(result);
 						if(result == 1) {
-							alert('답글 입력 성공');
+							alert('댓글 입력 성공');
 							getAllReply(); // 함수 호출		
 						}
 					}
 				});
 			}); // end btnAdd.click()
+
 			
 			// 게시판 댓글 전체 가져오기
 			function getAllReply() {
 				var boardQuestionId = ${boardQuestionVO.boardQuestionId};
 				
 				var url = '../../reply/allQuestion/' + boardQuestionId;
+				
 				$.getJSON(
 					url, 		
 					function(data) {
@@ -336,7 +344,8 @@ rel="stylesheet">
 						$(data).each(function(){
 							// this : 컬렉션의 각 인덱스 데이터를 의미
 							console.log(this);
-						  
+						  	
+							var replyQuestionId = this.replyQuestionId;
 							// 전송된 replyDateCreated는 문자열 형태이므로 날짜 형태로 변환이 필요
 							var replyQuestionDateCreated = new Date(this.replyQuestionDateCreated);
 
@@ -366,8 +375,61 @@ rel="stylesheet">
 								+ '<button class="btn_update" >수정</button>'
 								+ '&nbsp;&nbsp;'
 								+ '<button class="btn_delete" >삭제</button>'
-								+ '</pre>'
-								+ '</div>';
+								+ '&nbsp;&nbsp;'
+								+ '<button class="btn_subReply" >답글</button>'
+								+ '</pre>';
+								
+								var subReplyUrl = '../../subReply/allQuestion/' + replyQuestionId;
+								
+								$.ajax({
+					                url: subReplyUrl,
+					                type: 'GET',
+					                async: false, // 동기식으로 처리 (순차적으로 답글을 가져오기 위해) 
+					                success: function(subReplyData) {
+					                    console.log(subReplyData);
+
+					                    list += '<div class="sub_reply_list">';
+
+					                    // 답글 반복문
+					                    $(subReplyData).each(function() {
+					                    	console.log("this : " + this)
+					                    	
+					                    	if (this.replyQuestionId === replyQuestionId) {
+						                        var subReplyQuestionDateCreated = new Date(this.subReplyQuestionDateCreated);
+												
+						                        list += '<div class="sub_reply_item">'
+						                              + '<pre>'
+						                              + '<input type="hidden" id="subReplyQuestionId" value="'+ this.subReplyQuestionId +'">'
+						                              + 'ㄴ' + this.memberNickname
+						                              + '&nbsp;&nbsp;'
+						                              + '<input type="text" id="subReplyQuestionContent" value="'+ this.subReplyQuestionContent +'" readonly>'
+						                              + '&nbsp;&nbsp;'
+						                              + '<span style="color:red;">'+ this.subReplyQuestionLike +'</span>'
+						                              + '&nbsp;&nbsp;'
+						                              + '&nbsp;&nbsp;'
+						                              + '<span style="color:blue;">'+ this.subReplyQuestionHate +'</span>'
+													  + '&nbsp;&nbsp;'
+													  + '&nbsp;&nbsp;'
+													  + '<button class="btn_like"><i class="fas fa-thumbs-up"></i></button>'
+													  + '&nbsp;&nbsp;'
+													  + '<button class="btn_hate"><i class="fas fa-thumbs-down"></i></button>'
+													  + '&nbsp;&nbsp;'
+													  + '&nbsp;&nbsp;'
+						                              + subReplyQuestionDateCreated
+						                              + '&nbsp;&nbsp;'
+						                              + '<button class="btn_update_sub">수정</button>'
+						                              + '&nbsp;&nbsp;'
+						                              + '<button class="btn_delete_sub">삭제</button>'
+						                              + '</pre>'
+						                              + '</div>';
+					                    	}              
+					                    });
+
+					                    list += '</div>'; // 답글 리스트 닫기
+					                }
+					            });
+
+					            list += '</div>'; // 댓글 닫기
 						}); // end each()
 							
 						$('#replies').html(list); // 저장된 데이터를 replies div 표현
@@ -375,6 +437,94 @@ rel="stylesheet">
 				); // end getJSON()
 			} // end getAllReply()
 			
+		    // 답글 입력 폼 표시
+		    $('#replies').on('click', '.btn_subReply', function() {
+		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
+				console.log("replyQuestionId : " + replyQuestionId);
+				
+		        // 기존 답글 입력 폼이 있다면 삭제
+		        $('.subReplyForm').remove();
+		
+		        // 답글 입력 폼 생성
+		        var subReplyForm = `
+		            <div class="subReplyForm">
+		                <input type="text" id="subReplyContent" placeholder="답글 내용을 입력하세요">
+		                <button class="btnAddSubReply" data-replyQuestionId="${replyQuestionId}">답글 달기</button>
+		            </div>
+		        `;
+		        $(this).after(subReplyForm);
+		    });
+			
+		    // 답글 추가 버튼 클릭 이벤트
+		    $('#replies').on('click', '.btnAddSubReply', function() {
+		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
+				var memberNickname = $('#memberNickname').val(); // 작성자닉네임데이터
+				var memberId = $('#memberId').val(); // 작성자Id 데이터
+		        var subReplyQuestionContent = $('#subReplyContent').val();
+		        console.log("replyQuestionId : " + replyQuestionId);
+		        
+		        if (subReplyQuestionContent.trim() === '') {
+		            alert('내용을 입력해주세요.');
+		            return;
+		        }
+		
+				// javascript 객체 생성
+				var subReplyObj = {
+						'replyQuestionId' : replyQuestionId,
+						'memberNickname' : memberNickname,
+						'memberId' : memberId,
+						'subReplyQuestionContent' : subReplyQuestionContent
+				}
+				console.log(subReplyObj);
+		
+		        // AJAX 요청
+		        $.ajax({
+		            type: 'POST',
+		            url: '../../subReply/subReplyQuestion',
+		            headers: { 'Content-Type': 'application/json' },
+		            data: JSON.stringify(subReplyObj),
+		            success: function(result) {
+		                if (result == 1) {
+		                	alert('답글 입력 성공');
+							// 댓글, 답글 목록 출력 함수 호출
+		                    // 입력 폼 제거
+		                    $('.subReplyForm').remove();
+		                    getAllReply();
+		                }
+		            }
+		        });
+		    });
+			
+		    // 좋아요 버튼
+		    $('#replies').on('click', '.btn_Like', function() {
+		        var memberNickname = $('#memberNickname').value;
+		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
+		        
+		     	// javascript 객체 생성
+				var obj = {
+						'replyQuestionId' : replyQuestionId,
+						'memberNickname' : memberNickname,
+				}
+				console.log(obj);
+		        
+		     	// AJAX 요청
+		        $.ajax({
+		            type: 'POST',
+		            url: '../../like/replyLike',
+		            headers: { 'Content-Type': 'application/json' },
+		            data: JSON.stringify(obj),
+		            success: function(result) {
+		                if (result == 1) {
+		                	alert('좋아요~');
+
+		                    // 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
+		                }
+		            }
+		        });
+		    });
+		    
+		    // 싫어요 버튼
+		    
 		}); // end document
 	</script>
 

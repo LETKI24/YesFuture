@@ -23,7 +23,7 @@ public class ReplyServiceImple implements ReplyService {
 	private BoardMapper boardMapper;
 	
 	// 2024-12-10추가
-	@Transactional(value = "transactionalManagaer") 
+	@Transactional(value = "transactionalManager") 
 	// transactionManager가 관리 (create랑 delete에만 쓴다)(문제가 생겼을 때 롤백해주는 기능)
 	// 댓글 추가라는게 게시글(댓글갯수) 에도 영향을 줄 때 Transaction을 쓴다.
 	// 만드는 기능에 따라 DB를 만들어라
@@ -59,7 +59,7 @@ public class ReplyServiceImple implements ReplyService {
 	}
 
 	// 2024-12-10추가
-	@Transactional(value = "transactionalManagaer") // transactionManager가 관리
+	@Transactional(value = "transactionalManager") // transactionManager가 관리
 	
 	@Override
 	public int deleteReply(int replyId, int boardId) {
