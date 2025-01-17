@@ -27,5 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       ORDER BY SUB_REPLY_Q_ID
 	</select>
 
-
+	<update id="updateLikeCount">
+  	  UPDATE SUB_REPLY_QUESTION
+	  SET SUB_REPLY_Q_LIKE = SUB_REPLY_Q_LIKE + #{amount}
+	  WHERE SUB_REPLY_Q_ID = #{subReplyQuestionId}
+	  <!-- 보내는 쪽에서 맵형식으로 해서 보내줘야한다, 2개 보내는거고 amount는 VO에 없으니까 >> SubReplyMapper.java ㄱㄱ -->
+	</update>
+	
 </mapper>

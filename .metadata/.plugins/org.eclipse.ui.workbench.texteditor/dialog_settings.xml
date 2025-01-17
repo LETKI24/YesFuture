@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="$(&apos;#replies&apos;).html(list);"/>
+		<item key="selection" value="UTF-8"/>
 		<list key="findhistory">
+			<item value="UTF-8"/>
+			<item value="CharacterEncodingFilter"/>
 			<item value="$(&apos;#replies&apos;).html(list);"/>
 			<item value="replyList"/>
 			<item value="function("/>
@@ -21,8 +23,6 @@
 			<item value="attach-list"/>
 			<item value="attachQuestionList"/>
 			<item value="attachList"/>
-			<item value="attachInput"/>
-			<item value="image_item"/>
 		</list>
 		<list key="replacehistory">
 		</list>

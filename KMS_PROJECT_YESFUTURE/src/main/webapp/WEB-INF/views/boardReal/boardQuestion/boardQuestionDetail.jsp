@@ -137,6 +137,47 @@ rel="stylesheet">
 		    color: blue; /* 싫어요 아이콘 호버 색상 */
 		}
 		
+		.sub_reply_item .sub_btn_like, 
+		.sub_reply_item .sub_btn_hate {
+		    background-color: transparent; /* 버튼 배경색 제거 */
+		    border: none; /* 테두리 제거 */
+		    cursor: pointer; /* 클릭 가능한 포인터 표시 */
+		    font-size: 18px; /* 아이콘 크기 */
+		    margin-right: 5px; /* 버튼 간격 */
+		}
+		
+		.sub_reply_item .sub_btn_like i {
+		    color: transparent; /* 내부는 투명 */
+		    -webkit-text-stroke: 1px red; /* 테두리는 빨간색 */
+		    text-stroke: 1px red; /* 테두리는 빨간색 */
+		}
+		
+		.sub_reply_item .sub_btn_like.liked i {
+		    color: red; /* 내부 빨간색 */
+		    -webkit-text-stroke: 0; /* 테두리 없음 */
+		    text-stroke: 0; /* 테두리 없음 */
+		}
+		
+		.sub_reply_item .sub_btn_hate i {
+			color: transparent; /* 내부는 투명 */
+		    -webkit-text-stroke: 1px blue; /* 테두리는 빨간색 */
+		    text-stroke: 1px blue; /* 테두리는 빨간색 */
+		}
+		
+		.sub_reply_item .sub_btn_like:hover i {
+		    color: red; /* 좋아요 아이콘 호버 색상 */
+		}
+		
+		.sub_reply_item .sub_btn_like.liked:hover i {
+		    color: red; /* 좋아요 아이콘 호버 색상 */
+		    -webkit-text-stroke: 1px black; /* 테두리 없음 */
+		    text-stroke: 1px black; /* 테두리 없음 */
+		}
+		
+		.sub_reply_item .sub_btn_hate:hover i {
+		    color: blue; /* 싫어요 아이콘 호버 색상 */
+		}
+		
 </style>
 
 <meta charset="UTF-8">
@@ -395,7 +436,8 @@ rel="stylesheet">
 								+ '<button class="btn_delete" >삭제</button>'
 								+ '&nbsp;&nbsp;'
 								+ '<button class="btn_subReply" >답글</button>'
-								+ '</pre>';
+								+ '</pre>'
+								+ '</div>';
 								
 								var subReplyUrl = '../../subReply/allQuestion/' + replyQuestionId;
 								
@@ -428,9 +470,9 @@ rel="stylesheet">
 						                              + '<span style="color:blue;">'+ this.subReplyQuestionHate +'</span>'
 													  + '&nbsp;&nbsp;'
 													  + '&nbsp;&nbsp;'
-													  + '<button class="btn_like"><i class="fas fa-thumbs-up"></i></button>'
+													  + '<button class="sub_btn_like"><i class="fas fa-thumbs-up"></i></button>'
 													  + '&nbsp;&nbsp;'
-													  + '<button class="btn_hate"><i class="fas fa-thumbs-down"></i></button>'
+													  + '<button class="sub_btn_hate"><i class="fas fa-thumbs-down"></i></button>'
 													  + '&nbsp;&nbsp;'
 													  + '&nbsp;&nbsp;'
 						                              + subReplyQuestionDateCreated
@@ -447,7 +489,7 @@ rel="stylesheet">
 					                }
 					            });
 
-					            list += '</div>'; // 댓글 닫기
+					             // 댓글 닫기
 						}); // end each()
 							
 						$('#replies').html(list); // 저장된 데이터를 replies div 표현
@@ -513,13 +555,13 @@ rel="stylesheet">
 		        });
 		    });
 			
-		    // 좋아요 버튼
+		    // 댓글 좋아요 버튼
 		    $('#replies').on('click', '.btn_like', function() {
 		    	var $this = $(this); // 클릭된 버튼
 		        var memberNickname = $('#memberNickname').val();
 		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
 		        
-		     	// javascript 객체 생성
+		     	// ajavascript 객체 생성
 				var obj = {
 						'replyQuestionId' : replyQuestionId,
 						'memberNickname' : memberNickname,
@@ -534,16 +576,64 @@ rel="stylesheet">
 		            data: JSON.stringify(obj),
 		            success: function(result) {
 		            	console.log("Response from server : " + result);
+		            	var $likeCountSpan = $this.closest('.reply_item')
+		            								.find('span[style="color:red;"]'); // 좋아요 갯수 span
+		            	var currentLikeCount = parseInt($likeCountSpan.text().trim(), 10); // 현재 좋아요 갯수
+		            	
 		                if (result === "success") {
 		                    alert("좋아요를 눌렀습니다.");
 		                    // 좋아요 버튼 UI 업데이트 (예: 버튼 색 변경)
 		    				// 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
 		                    $this.addClass('liked');
+		                    $likeCountSpan.text(currentLikeCount + 1); // 좋아요 갯수 증가
 		                } else if (result === "cancel") {
 		                    alert("좋아요를 취소했습니다.");
 		                    // 좋아요 취소 UI 업데이트 (예: 버튼 색 복원)
 		    				// 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
 		                    $this.removeClass('liked');
+		                    $likeCountSpan.text(currentLikeCount - 1); // 좋아요 갯수 증가
+		                }
+		            }
+		        }); // end ajax
+		    });
+		    
+		    // 대댓글 좋아요 버튼
+		    $('#replies').on('click', '.sub_btn_like', function() {
+		    	var $this = $(this); // 클릭된 버튼
+		        var memberNickname = $('#memberNickname').val();
+		        var subReplyQuestionId = $(this).closest('.sub_reply_item').find('input#subReplyQuestionId').val();
+		        
+		     	// ajavascript 객체 생성
+				var obj = {
+						'subReplyQuestionId' : subReplyQuestionId,
+						'memberNickname' : memberNickname,
+				}
+				console.log(obj);
+		        
+		     	// AJAX 요청
+		        $.ajax({
+		            type: 'POST',
+		            url: '../../like/subReplyLike',
+		            headers: { 'Content-Type': 'application/json' },
+		            data: JSON.stringify(obj),
+		            success: function(result) {
+		            	console.log("Response from server : " + result);
+		            	var $likeCountSpan = $this.closest('.sub_reply_item')
+		            								.find('span[style="color:red;"]'); // 좋아요 갯수 span
+		            	var currentLikeCount = parseInt($likeCountSpan.text().trim(), 10); // 현재 좋아요 갯수
+		            	
+		                if (result === "success") {
+		                    alert("좋아요를 눌렀습니다.");
+		                    // 좋아요 버튼 UI 업데이트 (예: 버튼 색 변경)
+		    				// 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
+		                    $this.addClass('liked');
+		                    $likeCountSpan.text(currentLikeCount + 1); // 좋아요 갯수 증가
+		                } else if (result === "cancel") {
+		                    alert("좋아요를 취소했습니다.");
+		                    // 좋아요 취소 UI 업데이트 (예: 버튼 색 복원)
+		    				// 비동기로 좋아요, 싫어요 업데이트 or getAllReply();
+		                    $this.removeClass('liked');
+		                    $likeCountSpan.text(currentLikeCount - 1); // 좋아요 갯수 증가
 		                }
 		            }
 		        }); // end ajax

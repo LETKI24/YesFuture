@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.SubLikeQuestionMapper">
+	<resultMap type="com.yesfuture.ex01.domain.SubLikeQuestionVO" id="replyResultMap">
+      <id property="subLikeQuestionId" column="SUB_LIKE_QUESTION_ID" /> 
+      <result property="subReplyQuestionId" column="SUB_REPLY_QUESTION_ID" /> 
+      <result property="memberNickname" column="MEMBER_NICKNAME" />
+      <result property="subLikeQuestionDateCreated" column="SUB_LIKE_QUESTION_DATE_CREATED" />
+      <result property="subLikeQuestionType" column="SUB_LIKE_QUESTION_TYPE" />
+    </resultMap>
+   
+	<insert id="insertLike">
+      INSERT INTO SUB_LIKE_QUESTION 
+      VALUES (SUB_LIKE_QUESTION_SEQ.NEXTVAL, #{subReplyQuestionId}, #{memberNickname}, SYSDATE, 1)
+	</insert>
+
+	<insert id="insertHate">
+      INSERT INTO SUB_LIKE_QUESTION 
+      VALUES (SUB_LIKE_QUESTION_SEQ.NEXTVAL, #{subReplyQuestionId}, #{memberNickname}, SYSDATE, -1)
+	</insert>
+	
+	<delete id="cancelLike">
+	  DELETE FROM SUB_LIKE_QUESTION
+      WHERE SUB_REPLY_QUESTION_ID = #{subReplyQuestionId} AND MEMBER_NICKNAME = #{memberNickname}
+	</delete>
+	
+	<select id="checkLikeExist" resultType="int">
+	  SELECT COUNT(*)
+	  FROM SUB_LIKE_QUESTION
+	  WHERE SUB_REPLY_QUESTION_ID = #{subReplyQuestionId} AND MEMBER_NICKNAME = #{memberNickname}
+	</select>
+
+</mapper>
