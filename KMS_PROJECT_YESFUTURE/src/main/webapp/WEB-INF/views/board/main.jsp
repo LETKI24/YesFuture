@@ -74,7 +74,7 @@
 	
 	<div class="menu-bar">
         <!-- 이 위치에 main으로 가는 버튼 만들기 -->
-        <a href="problemMain" class="group1"><input type="button" value="문제은행 가기"></a>
+        <a href="../problem/problemMain" class="group1"><input type="button" value="문제은행 가기"></a>
         <a href="../boardReal/boardMain" class="group1"><input type="button" value="게시판"></a>
 	
 		<div class="group2">

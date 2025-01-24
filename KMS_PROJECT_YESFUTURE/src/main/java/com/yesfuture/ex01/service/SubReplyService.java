@@ -10,4 +10,6 @@ public interface SubReplyService {
 
 	List<SubReplyQuestionVO> getAllSubReplyQuestion(int replyQuestionId);
 
+	int deleteSubReplyQuestion(int subReplyQuestionId);
+
 }

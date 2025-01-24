@@ -16,4 +16,8 @@ public interface ReplyQuestionMapper {
 
 	int updateLikeCount(@Param("replyQuestionId") int replyQuestionId, @Param("amount") int amount);
 
+	int delete(int replyQuestionId);
+
+	int update(ReplyQuestionVO replyQuestionVO);
+
 }

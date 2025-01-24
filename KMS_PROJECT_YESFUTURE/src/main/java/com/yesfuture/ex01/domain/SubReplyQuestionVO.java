@@ -22,7 +22,7 @@ public class SubReplyQuestionVO {
 	private Date subReplyQuestionDateCreated;
 	private int subReplyQuestionLike;
 	private int subReplyQuestionHate;
-	
+	private int subReplyQuestionEnabled;
 	
     // 좋아요 여부를 저장하는 필드 추가
     private boolean subLikedByCurrentUser;

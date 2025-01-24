@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class ReplyRESTController {
 	@Autowired
 	private LikeService likeService;
 
+	@PreAuthorize("principal.member.memberNickname == #replyQuestionVO.memberNickname")
 	@PostMapping("/replyQuestion") // POST : 댓글 입력
 	public ResponseEntity<Integer> createReplyQuestion(@RequestBody ReplyQuestionVO replyQuestionVO) {
 		// JSON으로 전송된 replyQuestionVO가 여기 온다-@RequestBody ReplyVO replyVO
@@ -65,21 +67,26 @@ public class ReplyRESTController {
 		return new ResponseEntity<List<ReplyQuestionVO>>(list, HttpStatus.OK);
 	}
 	
-//	@PutMapping("/{replyId}") // PUT : 댓글 수정
-//	public ResponseEntity<Integer> updateReply(@PathVariable("replyId") int replyId, @RequestBody String replyContent) {
-//		log.info("updateReply()");
-//		log.info("replyId = " + replyId);
-//		int result = replyService.updateReply(replyId, replyContent);
-//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-//	}
+	@PreAuthorize("principal.member.memberNickname == #replyQuestionVO.memberNickname")
+	@PutMapping("/{replyQuestionId}") // PUT : 댓글 수정
+	public ResponseEntity<Integer> updateReply(@PathVariable("replyQuestionId") int replyQuestionId
+			, @RequestBody ReplyQuestionVO replyQuestionVO) {
+		log.info("replyQuestionId = " + replyQuestionId);
+		log.info("replyQuestionVO.get = " + replyQuestionVO.getReplyQuestionContent());
+		
+		int result = replyService.updateReplyQuestion(replyQuestionId, replyQuestionVO.getReplyQuestionContent());
+		
+	return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 	
-	@PutMapping("/deleteQuestion/{replyQuestionId}/{boardQuestionId}") // DELETE : 댓글 삭제 = 삭제된 댓글이라고 수정
+	@PreAuthorize("principal.member.memberNickname == #memberNickname")
+	@PutMapping("/deleteQuestion/{replyQuestionId}") // DELETE : 댓글 삭제 
 	public ResponseEntity<Integer> deleteReplyQuestion(@PathVariable("replyQuestionId") int replyQuestionId,
-			@PathVariable("boardQuestionId") int boardQuestionId, @RequestBody String replyQuestionContent) {
+			 @RequestBody String memberNickname) {
 		log.info("deleteReply()");
 		log.info("replyQuestionId = " + replyQuestionId);
 
-		int result = replyService.deleteReplyQuestion(replyQuestionId, boardQuestionId, replyQuestionContent);
+		int result = replyService.deleteReplyQuestion(replyQuestionId);
 
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}

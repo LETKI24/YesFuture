@@ -22,10 +22,10 @@ public class ReplyQuestionVO {
 	private Date replyQuestionDateCreated;
 	private int replyQuestionLike;
 	private int replyQuestionHate;
-	
+	private int replyQuestionEnabled;
 	
     // 좋아요 여부를 저장하는 필드 추가
-    private boolean isLikedByCurrentUser;
+    private boolean likedByCurrentUser;
 	
 }
 

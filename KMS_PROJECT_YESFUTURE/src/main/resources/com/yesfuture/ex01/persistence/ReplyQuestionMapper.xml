@@ -13,13 +13,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result property="replyQuestionDateCreated" column="REPLY_QUESTION_DATE_CREATED" />
       <result property="replyQuestionLike" column="REPLY_QUESTION_LIKE" />
       <result property="replyQuestionHate" column="REPLY_QUESTION_HATE" />
+      <result property="replyQuestionEnabled" column="REPLY_QUESTION_ENABLED" />
     </resultMap>
    
 	<insert id="insert">
       INSERT INTO REPLY_QUESTION (REPLY_QUESTION_ID, BOARD_QUESTION_ID, MEMBER_NICKNAME, MEMBER_ID,
        REPLY_QUESTION_CONTENT, REPLY_QUESTION_DATE_CREATED, REPLY_QUESTION_LIKE, REPLY_QUESTION_HATE)
       VALUES (REPLY_QUESTION_SEQ.NEXTVAL, #{boardQuestionId}, #{memberNickname}, #{memberId},
-       #{replyQuestionContent}, SYSDATE, 0, 0)
+       #{replyQuestionContent}, SYSDATE, 0, 0, 1)
 	</insert>
 
 	<select id="selectListByBoardId" resultMap="replyResultMap">
@@ -33,6 +34,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  SET REPLY_QUESTION_LIKE = REPLY_QUESTION_LIKE + #{amount}
 	  WHERE REPLY_QUESTION_ID = #{replyQuestionId}
 	  <!-- 보내는 쪽에서 맵형식으로 해서 보내줘야한다, 2개 보내는거고 amount는 VO에 없으니까 >> ReplyMapper.java ㄱㄱ -->
+	</update>
+	
+	<update id="update">
+	  UPDATE REPLY_QUESTION
+	  SET REPLY_QUESTION_CONTENT = #{replyQuestionContent}
+	  WHERE REPLY_QUESTION_ID = #{replyQuestionId}
+	</update>
+	
+	<update id="delete">
+	  UPDATE REPLY_QUESTION
+	  SET REPLY_QUESTION_ENABLED = 0
+	  WHERE REPLY_QUESTION_ID = #{replyQuestionId}
 	</update>
 
 </mapper>

@@ -10,7 +10,9 @@ public interface ReplyService {
 
 	List<ReplyQuestionVO> getAllReplyQuestion(int boardQuestionId);
 
-	int deleteReplyQuestion(int replyQuestionId, int boardQuestionId, String replyQuestionContent);
+	int deleteReplyQuestion(int replyQuestionId);
+
+	int updateReplyQuestion(int replyQuestionId, String replyQuestionContent);
 
 
 }

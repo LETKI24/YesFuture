@@ -31,5 +31,14 @@ public class SubReplyServiceImple implements SubReplyService{
 		log.info("getAllSubReplyQuestion()");
 		return subReplyQuestionMapper.selectListByReplyId(replyQuestionId);
 	}
+
+	@Override
+	public int deleteSubReplyQuestion(int subReplyQuestionId) {
+		log.info("deleteSubReplyQuestion()");
+		int deleteSubReplyQuestion = subReplyQuestionMapper.delete(subReplyQuestionId);
+		log.info(deleteSubReplyQuestion + "행 댓글 삭제");
+
+		return deleteSubReplyQuestion;
+	}
 	
 }

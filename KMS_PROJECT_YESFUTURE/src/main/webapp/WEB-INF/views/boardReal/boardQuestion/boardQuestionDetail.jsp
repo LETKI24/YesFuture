@@ -310,7 +310,6 @@ rel="stylesheet">
 			xhr.setRequestHeader(header, token);
 		});
 	
-	
 		$(document).ready(function(){
 			
 			// 게시글 수정
@@ -390,8 +389,11 @@ rel="stylesheet">
 						// getJSON()에서 json 데이터는 
 						// javascript object로 자동 parsing됨.
 						console.log(data);
+					
+						var memberNickname = $('#memberNickname').val();
 						
 						var list = ''; // 댓글 데이터를 HTML에 표현할 문자열 변수
+						var hidden = ''; // 같으면 그대로 쓰고 다르면 글자를 넣는다
 						
 						// $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수
 						$(data).each(function(){
@@ -400,44 +402,64 @@ rel="stylesheet">
 							// this : 컬렉션의 각 인덱스 데이터를 의미
 							console.log(this);
 						  	
+							// 본인이 작성한 댓글만 수정, 삭제 버튼이 나오게
+							if(memberNickname != this.memberNickname) {
+								hidden = 'hidden';
+						 	} else {
+						 		hidden = '';	
+						 	}
+							
 							var replyQuestionId = this.replyQuestionId;
 							// 전송된 replyDateCreated는 문자열 형태이므로 날짜 형태로 변환이 필요
 							var replyQuestionDateCreated = new Date(this.replyQuestionDateCreated);
-							
 							// 좋아요 버튼 스타일 결정
 				            var likeButtonClass = isLikedByCurrentUser ? 'btn_like liked' : 'btn_like';
-				            console.log("likeButtonClass : " + likeButtonClass);
-				            
-							list += '<div class="reply_item">'
-								+ '<pre>'
-								+ '<input type="hidden" id="replyQuestionId" value="'+ this.replyQuestionId +'">'
-								+ this.memberNickname
-								+ '&nbsp;&nbsp;' // 공백
-								+ '&nbsp;&nbsp;'
-								+ '<input type="text" id="replyQuestionContent" value="'+ this.replyQuestionContent +'" readonly>'
-								+ '&nbsp;&nbsp;'
-								+ '&nbsp;&nbsp;'
-								+ '<span style="color:red;">'+ this.replyQuestionLike +'</span>'
-								+ '&nbsp;&nbsp;'
-								+ '&nbsp;&nbsp;'
-								+ '<span style="color:blue;">'+ this.replyQuestionHate +'</span>'
-								+ '&nbsp;&nbsp;'
-								+ '&nbsp;&nbsp;'
-								+ '<button class="'+ likeButtonClass +'"><i class="fas fa-thumbs-up"></i></button>'
-								+ '&nbsp;&nbsp;'
-								+ '<button class="btn_hate"><i class="fas fa-thumbs-down"></i></button>'
-								+ '&nbsp;&nbsp;'
-								+ '&nbsp;&nbsp;'
-								+ replyQuestionDateCreated
-								+ '&nbsp;&nbsp;'
-								+ '&nbsp;&nbsp;'
-								+ '<button class="btn_update" >수정</button>'
-								+ '&nbsp;&nbsp;'
-								+ '<button class="btn_delete" >삭제</button>'
-								+ '&nbsp;&nbsp;'
-								+ '<button class="btn_subReply" >답글</button>'
-								+ '</pre>'
-								+ '</div>';
+														
+							if(this.replyQuestionEnabled === 0) {
+								list += '<div class="reply_item">'
+									+ '<pre>'
+									+ '<input type="hidden" id="replyQuestionId" value="'+ this.replyQuestionId +'">'
+									+ this.memberNickname
+									+ '&nbsp;&nbsp;' // 공백
+									+ '&nbsp;&nbsp;'
+									+ '※ 삭제된 댓글입니다.'
+									+ replyQuestionDateCreated
+									+ '</pre>'
+									+ '</div>';
+							} else {													            
+								list += '<div class="reply_item">'
+									+ '<pre>'
+									+ '<input type="hidden" id="replyQuestionId" value="'+ this.replyQuestionId +'">'
+									+ this.memberNickname
+									+ '&nbsp;&nbsp;' // 공백
+									+ '&nbsp;&nbsp;'
+									+ '<input type="text" id="replyQuestionContent" value="'+ this.replyQuestionContent +'" readonly>'
+									+ '&nbsp;&nbsp;'
+									+ '&nbsp;&nbsp;'
+									+ '<span style="color:red;">'+ this.replyQuestionLike +'</span>'
+									+ '&nbsp;&nbsp;'
+									+ '&nbsp;&nbsp;'
+									+ '<span style="color:blue;">'+ this.replyQuestionHate +'</span>'
+									+ '&nbsp;&nbsp;'
+									+ '&nbsp;&nbsp;'
+									+ '<button class="'+ likeButtonClass +'"><i class="fas fa-thumbs-up"></i></button>'
+									+ '&nbsp;&nbsp;'
+									+ '<button class="btn_hate"><i class="fas fa-thumbs-down"></i></button>'
+									+ '&nbsp;&nbsp;'
+									+ '&nbsp;&nbsp;'
+									+ replyQuestionDateCreated
+									+ '&nbsp;&nbsp;'
+									+ '&nbsp;&nbsp;'
+									+ '<button class="btn_update" '+ hidden +'>수정</button>'
+									+ '&nbsp;&nbsp;'
+									+ '<button class="btn_delete" '+ hidden +'>삭제</button>'
+									+ '&nbsp;&nbsp;'
+									+ '<button class="btn_subReply" >답글</button>'
+									+ '</pre>'
+									+ '</div>';
+							}
+							
+							
 								
 								var subReplyUrl = '../../subReply/allQuestion/' + replyQuestionId;
 								
@@ -448,40 +470,65 @@ rel="stylesheet">
 					                success: function(subReplyData) {
 					                    console.log(subReplyData);
 
+										var subHidden = ''; // 같으면 그대로 쓰고 다르면 글자(hidden)를 넣는다
+										
 					                    list += '<div class="sub_reply_list">';
 
 					                    // 답글 반복문
 					                    $(subReplyData).each(function() {
-					                    	console.log("this : " + this)
+					                    	console.log("this : " + this.memberNickname);
+					                    	console.log("memberNickname : " + memberNickname);
+					                    	
+					                    	// 본인이 작성한 답글만 수정, 삭제 버튼이 나오게
+											if(memberNickname != this.memberNickname) {
+												subHidden = 'hidden';
+										 	} else {
+										 		subHidden = '';
+										 	}
 					                    	
 					                    	if (this.replyQuestionId === replyQuestionId) {
 						                        var subReplyQuestionDateCreated = new Date(this.subReplyQuestionDateCreated);
+						                        console.log("subReplyData : " + subReplyData);
+												console.log("this.subReplyQuestionEnabled : " + this.subReplyQuestionEnabled);
 												
-						                        list += '<div class="sub_reply_item">'
-						                              + '<pre>'
-						                              + '<input type="hidden" id="subReplyQuestionId" value="'+ this.subReplyQuestionId +'">'
-						                              + 'ㄴ' + this.memberNickname
-						                              + '&nbsp;&nbsp;'
-						                              + '<input type="text" id="subReplyQuestionContent" value="'+ this.subReplyQuestionContent +'" readonly>'
-						                              + '&nbsp;&nbsp;'
-						                              + '<span style="color:red;">'+ this.subReplyQuestionLike +'</span>'
-						                              + '&nbsp;&nbsp;'
-						                              + '&nbsp;&nbsp;'
-						                              + '<span style="color:blue;">'+ this.subReplyQuestionHate +'</span>'
-													  + '&nbsp;&nbsp;'
-													  + '&nbsp;&nbsp;'
-													  + '<button class="sub_btn_like"><i class="fas fa-thumbs-up"></i></button>'
-													  + '&nbsp;&nbsp;'
-													  + '<button class="sub_btn_hate"><i class="fas fa-thumbs-down"></i></button>'
-													  + '&nbsp;&nbsp;'
-													  + '&nbsp;&nbsp;'
-						                              + subReplyQuestionDateCreated
-						                              + '&nbsp;&nbsp;'
-						                              + '<button class="btn_update_sub">수정</button>'
-						                              + '&nbsp;&nbsp;'
-						                              + '<button class="btn_delete_sub">삭제</button>'
-						                              + '</pre>'
-						                              + '</div>';
+						                        if (this.subReplyQuestionEnabled === 0) {
+						                        	list += '<div class="sub_reply_item">'
+														+ '<pre>'
+														+ '<input type="hidden" id="subReplyQuestionId" value="'+ this.subReplyQuestionId +'">'
+														+ 'ㄴ' + this.memberNickname
+														+ '&nbsp;&nbsp;' // 공백
+														+ '&nbsp;&nbsp;'
+														+ '※ 삭제된 댓글입니다.'
+														+ subReplyQuestionDateCreated
+														+ '</pre>'
+														+ '</div>';
+												} else {
+						                        	list += '<div class="sub_reply_item">'
+						                                + '<pre>'
+						                                + '<input type="hidden" id="subReplyQuestionId" value="'+ this.subReplyQuestionId +'">'
+						                                + 'ㄴ' + this.memberNickname
+						                                + '&nbsp;&nbsp;'
+						                                + '<input type="text" id="subReplyQuestionContent" value="'+ this.subReplyQuestionContent +'" readonly>'
+						                                + '&nbsp;&nbsp;'
+						                                + '<span style="color:red;">'+ this.subReplyQuestionLike +'</span>'
+						                                + '&nbsp;&nbsp;'
+						                                + '&nbsp;&nbsp;'
+						                                + '<span style="color:blue;">'+ this.subReplyQuestionHate +'</span>'
+													    + '&nbsp;&nbsp;'
+													    + '&nbsp;&nbsp;'
+													    + '<button class="sub_btn_like"><i class="fas fa-thumbs-up"></i></button>'
+													    + '&nbsp;&nbsp;'
+													    + '<button class="sub_btn_hate"><i class="fas fa-thumbs-down"></i></button>'
+													    + '&nbsp;&nbsp;'
+													    + '&nbsp;&nbsp;'
+						                                + subReplyQuestionDateCreated
+						                                + '&nbsp;&nbsp;'
+						                                + '<button class="sub_btn_update" '+ subHidden +'>수정</button>'
+						                                + '&nbsp;&nbsp;'
+						                                + '<button class="sub_btn_delete" '+ subHidden +'>삭제</button>'
+						                                + '</pre>'
+						                                + '</div>';
+												}
 					                    	}              
 					                    });
 
@@ -497,7 +544,86 @@ rel="stylesheet">
 				); // end getJSON()
 			} // end getAllReply()
 			
-		    // 답글 입력 폼 표시
+		    // 댓글 수정 입력 폼 표시
+		    $('#replies').on('click', '.btn_update', function() {
+		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
+		        		        
+		        // 기존 댓글 수정 입력 폼이 있다면 삭제
+		        $('.updateReplyForm').remove();
+		
+		        // 답글 입력 폼 생성
+		        var updateReplyForm = `
+		            <div class="updateReplyForm">
+		                <input type="text" id="updateReplyContent" placeholder="수정 내용을 입력하세요">
+		                <button class="btnUpdateReply" data-replyQuestionId="${replyQuestionId}">댓글 수정</button>
+		            </div>
+		        `;
+		        $(this).after(updateReplyForm);
+		    });
+			
+		    // 댓글 수정 버튼 클릭 이벤트
+		    $('#replies').on('click', '.btnUpdateReply', function() {
+		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
+				var memberNickname = $('#memberNickname').val(); // 작성자닉네임데이터
+				var memberId = $('#memberId').val(); // 작성자Id 데이터
+		        var replyQuestionContent = $('#updateReplyContent').val();
+		        
+		        if (replyQuestionContent.trim() === '') {
+		            alert('내용을 입력해주세요.');
+		            return;
+		        }
+		
+				// javascript 객체 생성
+				var updateReplyObj = {
+						'replyQuestionId' : replyQuestionId,
+						'memberNickname' : memberNickname,
+						'memberId' : memberId,
+						'replyQuestionContent' : replyQuestionContent
+				}
+		
+		        // AJAX 요청
+		        $.ajax({
+		            type: 'PUT',
+		            url: '../../reply/' + replyQuestionId,
+		            headers: { 'Content-Type': 'application/json' },
+		            data: JSON.stringify(updateReplyObj),
+		            success: function(result) {
+		                if (result == 1) {
+		                	alert('댓글 수정 성공');
+							// 댓글, 답글 목록 출력 함수 호출
+		                    // 입력 폼 제거
+		                    getAllReply();
+		                }
+		            }
+		        });
+		    });
+			
+			// 댓글 삭제 기능
+			$('#replies').on('click', '.btn_delete', function () {
+			    // 현재 삭제 버튼이 속한 댓글의 부모 요소를 가져옴
+			    var memberNickname = $('#memberNickname').val(); // 로그인회원 닉네임데이터
+			
+			    // 삭제 처리 후 서버와의 동기화 (Ajax 요청)
+			    var replyQuestionId = $(this).closest('.reply_item').find('#replyQuestionId').val();
+			    
+			    $.ajax({
+			        url: '../../reply/deleteQuestion/' + replyQuestionId, 
+			        type: 'PUT',
+					headers : {
+						'Content-Type' : 'application/json'
+					},
+					data : memberNickname,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('댓글 삭제 성공!');
+							getAllReply();
+						}
+					}
+			    });
+			});
+			
+		    // 대댓글 입력 폼 표시
 		    $('#replies').on('click', '.btn_subReply', function() {
 		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
 				console.log("replyQuestionId : " + replyQuestionId);
@@ -505,7 +631,7 @@ rel="stylesheet">
 		        // 기존 답글 입력 폼이 있다면 삭제
 		        $('.subReplyForm').remove();
 		
-		        // 답글 입력 폼 생성
+		        // 대댓글 입력 폼 생성
 		        var subReplyForm = `
 		            <div class="subReplyForm">
 		                <input type="text" id="subReplyContent" placeholder="답글 내용을 입력하세요">
@@ -515,7 +641,7 @@ rel="stylesheet">
 		        $(this).after(subReplyForm);
 		    });
 			
-		    // 답글 추가 버튼 클릭 이벤트
+		    // 대댓글 추가 버튼 클릭 이벤트
 		    $('#replies').on('click', '.btnAddSubReply', function() {
 		        var replyQuestionId = $(this).closest('.reply_item').find('input#replyQuestionId').val();
 				var memberNickname = $('#memberNickname').val(); // 작성자닉네임데이터
@@ -554,6 +680,31 @@ rel="stylesheet">
 		            }
 		        });
 		    });
+		    
+		 	// 대댓글 삭제 기능
+			$('#replies').on('click', '.sub_btn_delete', function () {
+			    // 현재 삭제 버튼이 속한 댓글의 부모 요소를 가져옴
+			    var memberNickname = $('#memberNickname').val(); // 로그인회원 닉네임데이터
+			
+			    // 삭제 처리 후 서버와의 동기화 (Ajax 요청)
+			    var subReplyQuestionId = $(this).closest('.sub_reply_item').find('#subReplyQuestionId').val();
+			    
+			    $.ajax({
+			        url: '../../subReply/deleteQuestion/' + subReplyQuestionId, 
+			        type: 'PUT',
+					headers : {
+						'Content-Type' : 'application/json'
+					},
+					data : memberNickname,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('답글 삭제 성공!');
+							getAllReply();
+						}
+					}
+			    });
+			});
 			
 		    // 댓글 좋아요 버튼
 		    $('#replies').on('click', '.btn_like', function() {
@@ -640,9 +791,10 @@ rel="stylesheet">
 		    });
 		    
 		    // 싫어요 버튼
-		    
+ 
+					    
 		}); // end document
 	</script>
-
+		
 </body>
 </html>

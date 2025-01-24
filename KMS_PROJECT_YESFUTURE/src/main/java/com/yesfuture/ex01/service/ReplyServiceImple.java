@@ -48,29 +48,28 @@ public class ReplyServiceImple implements ReplyService {
 	}
 
 	@Override // 코드 삭제해야될 것
-	public int deleteReplyQuestion(int replyQuestionId, int boardQuestionId, String replyQuestionContent) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteReplyQuestion(int replyQuestionId) {
+		log.info("deleteReply()");
+		log.info("replyId = " + replyQuestionId);
+		int deleteReplyQuestion = replyQuestionMapper.delete(replyQuestionId);
+		log.info(deleteReplyQuestion + "행 댓글 삭제");
+
+		return deleteReplyQuestion;
 	}
 
-	
-	
-	
-	
-	
-//	@Transactional(value = "transactionManager") // transactionManager가 관리
-//	@Override
-//	public int deleteReplyQuestion(int replyQuestionId, int boardQuestionId, String replyQuestionContent) {
-//		log.info("deleteReply()");
-//		ReplyQuestionVO replyQuestionVO = new ReplyQuestionVO();
-//		int deleteResult = replyQuestionMapper.delete(replyId);
-//		log.info(deleteResult + "행 댓글 삭제");
-//		
-//		int updateResult = boardMapper
-//				.updateReplyCount(boardId, -1);
-//		log.info(updateResult + "행 게시판 수정");
-//		return 1;
-//	}
+	@Override
+	public int updateReplyQuestion(int replyQuestionId, String replyQuestionContent) {
+		log.info("replyQuestionContent : " + replyQuestionContent);
+		log.info("replyQuestionId : " + replyQuestionId);
+		
+		ReplyQuestionVO replyQuestionVO = new ReplyQuestionVO();
+		replyQuestionVO.setReplyQuestionId(replyQuestionId);
+		replyQuestionVO.setReplyQuestionContent(replyQuestionContent);
+		
+		int updateResult = replyQuestionMapper.update(replyQuestionVO);
+		
+		return updateResult;
+	}
 
 
 }

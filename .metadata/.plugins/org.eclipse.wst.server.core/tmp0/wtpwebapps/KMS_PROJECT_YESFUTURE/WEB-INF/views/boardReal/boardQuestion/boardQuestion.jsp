@@ -170,7 +170,24 @@
 			<!-- 글쓰기 버튼 -->
 			<a href="registerQuestion"><input type="button" value="글쓰기"></a>
 		</ul>
+		
+		<ul>
+			<!-- 검색 -->
+			<select id="searchForWhat" name="searchForWhat">
+				<option value="boardQuestionTitle">제목</option>
+				<option value="memberNickname">작성자</option>
+			</select>
+			<input type="text" id="searchQuestion">
+			<button id="btnSearch">검색</button>
+		</ul>
+		
     </div>
+    
+    <script type="text/javascript">
+    	
+    	
+    	
+    </script>
     
 </body>
 </html>
