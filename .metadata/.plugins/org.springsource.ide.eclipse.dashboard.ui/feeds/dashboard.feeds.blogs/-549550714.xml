@@ -1,28 +1,247 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 23 Jan 2025 21:11:48 GMT</lastBuildDate><item><title><![CDATA[A Bootiful Podcast: Java Developer Advocate Billy Korando on JavaOne 2025, Java 24, and so much more]]></title><link>https://spring.io/blog/2025/01/23/a-bootiful-podcast-billy-korando</link><guid isPermaLink="true">https://spring.io/blog/2025/01/23/a-bootiful-podcast-billy-korando</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 23 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! in this installment I talk to Java developer advocate Billy Korando about the latest and greatest in the amazing Java ecosystem! #java #JavaOne #Oracle&lt;/p&gt;
-&lt;iframe title=&quot;Java Developer Advocate Billy Korando on JavaOne 2025, Java 24, and so much more&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=h4qky-17c50d6-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 3.5.0-M1 available now]]></title><link>https://spring.io/blog/2025/01/23/spring-boot-3-5-0-M1-available-now</link><guid isPermaLink="true">https://spring.io/blog/2025/01/23/spring-boot-3-5-0-M1-available-now</guid><dc:creator><![CDATA[mhalbritter]]></dc:creator><pubDate>Thu, 23 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Boot &lt;code&gt;3.5.0-M1&lt;/code&gt; has been released and is now available from &lt;a href=&quot;https://repo.spring.io/milestone&quot;&gt;https://repo.spring.io/milestone&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-boot/releases/tag/v3.5.0-M1&quot;&gt;100 enhancements, documentation improvements, dependency upgrades, and bug fixes&lt;/a&gt;. Notable new features include:&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 05 Feb 2025 15:21:03 GMT</lastBuildDate><item><title><![CDATA[This Week in Spring - February 4th, 2025]]></title><link>https://spring.io/blog/2025/02/04/this-week-in-spring-february-4th-2025</link><guid isPermaLink="true">https://spring.io/blog/2025/02/04/this-week-in-spring-february-4th-2025</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 04 Feb 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! It&apos;s February 4th, 2025, as I write this. We are ten days away from Valentine&apos;s day, and about a month away from Devnexus. Lots to look forward to, in both the short term and the long term!&lt;/p&gt;
+&lt;p&gt;Let&apos;s dive right into this week&apos;s roundup!&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Task decoration for scheduled tasks&lt;/li&gt;
-&lt;li&gt;Vibur connection pool &lt;code&gt;DataSourceBuilder&lt;/code&gt; support&lt;/li&gt;
-&lt;li&gt;SSL bundle metrics&lt;/li&gt;
+&lt;li&gt;Thanks very much to the San Francisco JUG for letting Spring Boot co-founder Phil Webb and I  take a little stroll down memory lane, and revisit at the &lt;a href=&quot;https://www.youtube.com/watch?v=SwKrrLCVTH0&amp;#x26;t=26s&quot;&gt;first 10 whole years of Spring Boot&lt;/a&gt;. This was a ton of fun!&lt;/li&gt;
+&lt;li&gt;our friend, Vaadin&apos;s Marcus Hellberg, has a really crazy example of a Spring Boot and Vaadin application &lt;a href=&quot;https://twitter.com/marcushellberg/status/1886678718200078609?s=12&quot;&gt;that uses Spring AI MCP to update itself!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bellsoft&apos;s Catherine Edelveis has a nice video &lt;a href=&quot;https://www.youtube.com/watch?v=dwVPvZAPaxQ&quot;&gt;on Dockerizing your Spring Boot applications&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;do you ever   want an exploding code minigame  from within your IntelliJ IDEA? &lt;a href=&quot;https://t.co/QlWVTb5xUV&quot;&gt;there&apos;s a plugin for that!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/02/02/spring-cloud-stream-applications-2024_0_1-and-2025_0_0-are-now-available&quot;&gt;Spring Cloud Stream Applications 2024.0.1 and 2025.0.0 are now available&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;in last week&apos;s installment of &lt;em&gt;A Bootiful Podcast&lt;/em&gt;, I talked to HTMX creator Carson Gross.&lt;/li&gt;
+&lt;li&gt;and just this morning, I had another discussion - but this time intended for Youtube! - with Carson, &lt;a href=&quot;https://www.youtube.com/watch?v=huLLh_xgcl4&quot;&gt;looking at how to actually weild HTMX and Spring Boot together&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Boot 3.4 came out in November and brought with it a ton of cool features! Did you see the roundups I did looking at the various portfolio projects, both above and below that release? &lt;a href=&quot;https://www.youtube.com/watch?v=6fYjOTVTvOc&quot;&gt;What&apos;s new in Spring AI M4&lt;/a&gt; , &lt;a href=&quot;https://www.youtube.com/watch?v=bZoF3TPNXEE&quot;&gt;What&apos;s new in Spring Modulith 1.3&lt;/a&gt;, &lt;a href=&quot;https://www.youtube.com/watch?v=phbYTF6xAaY&quot;&gt;What&apos;s new in Spring Batch 5.2&lt;/a&gt;, &lt;a href=&quot;https://www.youtube.com/watch?v=gGyg3gU5iY0&quot;&gt;What&apos;s new in Spring Integration 6.4&lt;/a&gt;, &lt;a href=&quot;https://youtu.be/lPreCE97nEw?si=ATQZ4aTKeoI03wqH&quot;&gt;What&apos;s new in Spring Security 6.4&lt;/a&gt;, &lt;a href=&quot;https://www.youtube.com/watch?v=DUIpWkl_ixE&quot;&gt;What&apos;s new in Spring Data 2024.1?&lt;/a&gt;, and finally &lt;a href=&quot;https://youtu.be/t2NEM-Jw430?si=YgzbhEOUUn8mQ-ew&quot;&gt;What&apos;s new in Spring Framework 6.2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud Stream Applications 2024.0.1 and 2025.0.0 are now available]]></title><link>https://spring.io/blog/2025/02/02/spring-cloud-stream-applications-2024_0_1-and-2025_0_0-are-now-available</link><guid isPermaLink="true">https://spring.io/blog/2025/02/02/spring-cloud-stream-applications-2024_0_1-and-2025_0_0-are-now-available</guid><dc:creator><![CDATA[onobc]]></dc:creator><pubDate>Sun, 02 Feb 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I¡¯m happy to announce that Spring Cloud Stream Applications &lt;code&gt;2024.0.1&lt;/code&gt; and &lt;code&gt;2025.0.0&lt;/code&gt; have been released and are now available from Maven Central.&lt;/p&gt;
+&lt;p&gt;The releases include numerous bug fixes and dependency upgrades.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;2024.0.1&lt;/code&gt; release updates to Spring Boot &lt;code&gt;3.3.8&lt;/code&gt; / Spring Cloud &lt;code&gt;2023.0.5&lt;/code&gt; and the &lt;code&gt;2025.0.0&lt;/code&gt; release updates to Spring Boot &lt;code&gt;3.4.2&lt;/code&gt; and Spring Cloud &lt;code&gt;2024.0.0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Please see the release notes (&lt;a href=&quot;https://github.com/spring-cloud/stream-applications/releases/tag/v2024.0.1&quot;&gt;2024.0.1&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-cloud/stream-applications/releases/tag/v2025.0.0&quot;&gt;2025.0.0&lt;/a&gt;) for more details.&lt;/p&gt;
+&lt;h2 id=&quot;stay-in-touch&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#stay-in-touch&quot; aria-label=&quot;stay in touch permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Stay in touch...&lt;/h2&gt;
+&lt;p&gt;Please continue to engage with us by creating bug reports and feature requests on &lt;a href=&quot;https://github.com/spring-cloud/stream-applications&quot;&gt;Github&lt;/a&gt; and asking questions on StackOverflow using the &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud-stream&quot;&gt;spring-cloud-stream&lt;/a&gt; or &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud-dataflow&quot;&gt;spring-cloud-dataflow&lt;/a&gt; tags.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: HTMX creator Carson Gross]]></title><link>https://spring.io/blog/2025/01/30/a-bootiful-podcast-carson-gross</link><guid isPermaLink="true">https://spring.io/blog/2025/01/30/a-bootiful-podcast-carson-gross</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 30 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring and HTML fans! Today I talk to hypermedia enjoyer Carson Gross, creator of the ever popular HTMX library which eschews a ton of the complexity associated with building client side applications.&lt;/p&gt;
+&lt;iframe title=&quot;HTMX creator Carson Gross&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=kt3pn-17db0aa-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2025.0.0-M1 (aka Northfields) has been released]]></title><link>https://spring.io/blog/2025/01/30/spring-cloud-2025-0-0-M1-aka-northfields-has-been-released</link><guid isPermaLink="true">https://spring.io/blog/2025/01/30/spring-cloud-2025-0-0-M1-aka-northfields-has-been-released</guid><dc:creator><![CDATA[spencergibb]]></dc:creator><pubDate>Thu, 30 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the Milestone 1 (M1) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2025.0&lt;/a&gt; (aka Northfields) Release Train is available today. The release can be found in &lt;a href=&quot;https://repo.spring.io/milestone/&quot;&gt;Spring Milestone&lt;/a&gt; repository. You can check out the 2025.0 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2025.0-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;notable-changes-in-the-202500-m1-release&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#notable-changes-in-the-202500-m1-release&quot; aria-label=&quot;notable changes in the 202500 m1 release permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Notable Changes in the 2025.0.0-M1 Release&lt;/h2&gt;
+&lt;p&gt;Spring Cloud 2025.0.0-M1 depends on Spring Boot 3.5.0-M1. See all issues and pull requests that are part of the release &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/158&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;spring-cloud-gateway&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-gateway&quot; aria-label=&quot;spring cloud gateway permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Gateway&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds support for spring-cloud-function and spring-cloud-stream handlers &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/pull/3646&quot;&gt;#3646&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Adds support for a Bucket4jRateLimiter in server webflux &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/pull/2955&quot;&gt;#2955&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Deprecate WebClientRouting infrastructure. This will be removed in 5.0 later this year. &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/issues/3680&quot;&gt;#3680&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;New Module and Starter names have been created and the old names are deprectated. The new and deprecated artifacts are listed in the table below &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/pull/3645&quot;&gt;#3645&lt;/a&gt;. These new names clarify the two styles of gateway (server or proxy exchange) as well as the two web stacks from Spring Framework (Web MCV and WebFlux). Use of the deprecated artifacts will add a warning message in the logs.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Please see the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.5.0-M1-Release-Notes&quot;&gt;release notes&lt;/a&gt; for more details and upgrade instructions.&lt;/p&gt;
-&lt;p&gt;Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
-&lt;h3 id=&quot;how-can-you-help&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#how-can-you-help&quot; aria-label=&quot;how can you help permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-boot/3.5/&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring for Apache Pulsar 1.1.8 and 1.2.2 are now available]]></title><link>https://spring.io/blog/2025/01/23/spring-for-apache-pulsar-1-1-8-and-1-2-2-are-now-available</link><guid isPermaLink="true">https://spring.io/blog/2025/01/23/spring-for-apache-pulsar-1-1-8-and-1-2-2-are-now-available</guid><dc:creator><![CDATA[onobc]]></dc:creator><pubDate>Thu, 23 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I¡¯m happy to announce that Spring for Apache Pulsar &lt;code&gt;1.1.8&lt;/code&gt; and &lt;code&gt;1.2.2&lt;/code&gt; have been released and are now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;The releases will be included in the upcoming Spring Boot &lt;a href=&quot;https://github.com/spring-projects/spring-boot/milestones/3.3.8&quot;&gt;3.3.8&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-projects/spring-boot/milestones/3.4.2&quot;&gt;3.4.2&lt;/a&gt; releases, respectively.&lt;/p&gt;
-&lt;p&gt;This release includes numerous dependency upgrades.&lt;/p&gt;
-&lt;p&gt;Please see the release notes (&lt;a href=&quot;https://github.com/spring-projects/spring-pulsar/releases/tag/v1.1.8&quot;&gt;1.1.8&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-projects/spring-pulsar/releases/tag/v1.2.2&quot;&gt;1.2.2&lt;/a&gt;) for more details.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Framework 7.0.0-M1 Available Now]]></title><link>https://spring.io/blog/2025/01/23/spring-framework-7-0-0-M1-available-now</link><guid isPermaLink="true">https://spring.io/blog/2025/01/23/spring-framework-7-0-0-M1-available-now</guid><dc:creator><![CDATA[bclozel]]></dc:creator><pubDate>Thu, 23 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I am pleased to announce the first milestone of the next Spring Framework generation.&lt;/p&gt;
-&lt;p&gt;As &lt;a href=&quot;https://spring.io/blog/2025/01/21/milestones-to-central&quot;&gt;announced previously&lt;/a&gt;, we shipped &quot;7.0.0-M1&quot; to the usual repo.spring.io artifact repository, but also to Maven Central.
-We hope to collect more feedback from the community this year along the way; we are targeting November 2025 for the official release date.&lt;/p&gt;
-&lt;p&gt;This first milestone partially delivers &lt;a href=&quot;https://spring.io/blog/2024/10/01/from-spring-framework-6-2-to-7-0&quot;&gt;the baseline changes that we shared last October&lt;/a&gt;.
-Spring Framework still expects a JDK 17-27 compatibility range and raises its minimum requirements to Jakarta EE 11 (Tomcat 11, Hibernate ORM 7, Hibernate Validator 9), Kotlin 2.x and GraalVM 23.
-This is also an opportunity for us to ship API removals and deprecations that we intend to enforce as of 7.0.&lt;/p&gt;
-&lt;p&gt;There are quite a few features scheduled already and the team is working on bringing them in the next milestones.
-7.0.0-M1 ships a first round of &lt;a href=&quot;https://docs.spring.io/spring-framework/reference/7.0-SNAPSHOT/core/null-safety.html#null-safety-migrating&quot;&gt;Null Safety&lt;/a&gt; work,
-retiring former &lt;code&gt;org.springframework.lang&lt;/code&gt; annotations in favor of JSpecify.
-We will share a dedicated blog post soon!&lt;/p&gt;
-&lt;p&gt;This first milestone kicks off the entire release train for the Spring portfolio, so you can expect new milestones from your favorite Spring projects very soon.
-If you would like to test this in your Spring Boot application, keep an eye on &lt;a href=&quot;https://github.com/spring-projects/spring-boot/milestones&quot;&gt;the Boot milestone page&lt;/a&gt; and this blog for updates.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-framework/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-framework&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-framework/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-framework/reference/&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Deprecated Artifact&lt;/th&gt;
+&lt;th&gt;New Artifact&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;spring-cloud-gateway-server&lt;/td&gt;
+&lt;td&gt;spring-cloud-gateway-server-webflux&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;spring-cloud-gateway-server-mvc&lt;/td&gt;
+&lt;td&gt;spring-cloud-gateway-server-webmvc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;spring-cloud-starter-gateway-server&lt;/td&gt;
+&lt;td&gt;spring-cloud-starter-gateway-server-webflux&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;spring-cloud-starter-gateway-server-mvc&lt;/td&gt;
+&lt;td&gt;spring-cloud-starter-gateway-server-webmvc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;spring-cloud-gateway-mvc&lt;/td&gt;
+&lt;td&gt;spring-cloud-gateway-proxyexchange-webmvc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;spring-cloud-gateway-webflux&lt;/td&gt;
+&lt;td&gt;spring-cloud-gateway-proxyexchange-webflux&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&quot;spring-cloud-config&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-config&quot; aria-label=&quot;spring cloud config permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Config&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add property to disable adding invalid prefix when decryption fails &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/issues/2632&quot;&gt;#2708&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-stream&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-stream&quot; aria-label=&quot;spring cloud stream permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Stream&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Clarify that having a custom error handler disables auto send to DLQ &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/pull/3063&quot;&gt;3063&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;GH-3062: Fix &lt;code&gt;KafkaBinderMetrics&lt;/code&gt; for resource leaks &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/pull/3064&quot;&gt;3064&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-netflix&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-netflix&quot; aria-label=&quot;spring cloud netflix permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Netflix&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Allow customising Apache HTTP Client 5 &lt;code&gt;RequestConfig&lt;/code&gt; in &lt;code&gt;EurekaClientHttpRequestFactorySupplier&lt;/code&gt; &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/pull/4394&quot;&gt;4394&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-circuitbreaker&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-circuitbreaker&quot; aria-label=&quot;spring cloud circuitbreaker permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Circuitbreaker&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds support for reactive bulkheads &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/issues/166&quot;&gt;#166&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;spring-cloud-function&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-cloud-function&quot; aria-label=&quot;spring cloud function permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Cloud Function&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Change &quot;synchronized&quot; to reentrant lock for virtual-threads &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/pull/1188&quot;&gt;#1188&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;The following modules were updated as part of 2025.0.0-M1:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Module&lt;/th&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Issues&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Openfeign&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Config&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Build&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
+&lt;td&gt;3.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v3.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Consul&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-consul/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Vault&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-vault/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Function&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Dependencies&lt;/td&gt;
+&lt;td&gt;2025.0.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/releases/tag/v2025.0.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Task&lt;/td&gt;
+&lt;td&gt;3.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-task/releases/tag/v3.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
+&lt;td&gt;3.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v3.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Bus&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-bus/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Zookeeper&lt;/td&gt;
+&lt;td&gt;4.3.0-M1&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-zookeeper/releases/tag/v4.3.0-M1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;repositories&gt;
+    &amp;#x3C;repository&gt;
+        &amp;#x3C;id&gt;spring-milestones&amp;#x3C;/id&gt;
+        &amp;#x3C;name&gt;Spring Milestones&amp;#x3C;/name&gt;
+        &amp;#x3C;url&gt;https://repo.spring.io/milestone&amp;#x3C;/url&gt;
+        &amp;#x3C;snapshots&gt;
+            &amp;#x3C;enabled&gt;false&amp;#x3C;/enabled&gt;
+        &amp;#x3C;/snapshots&gt;
+    &amp;#x3C;/repository&gt;
+&amp;#x3C;/repositories&gt;
+&amp;#x3C;dependencyManagement&gt;
+    &amp;#x3C;dependencies&gt;
+        &amp;#x3C;dependency&gt;
+            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
+            &amp;#x3C;version&gt;2025.0.0-M1&amp;#x3C;/version&gt;
+            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
+            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
+        &amp;#x3C;/dependency&gt;
+    &amp;#x3C;/dependencies&gt;
+&amp;#x3C;/dependencyManagement&gt;
+&amp;#x3C;dependencies&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    ...
+&amp;#x3C;/dependencies&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or with Gradle:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;plugins {
+  id &apos;java&apos;
+  id &apos;org.springframework.boot&apos; version &apos;3.5.0-M1&apos;
+  id &apos;io.spring.dependency-management&apos; version &apos;1.1.7&apos;
+}
+
+//...
+
+ext {
+  set(&apos;springCloudVersion&apos;, &quot;2025.0.0-M1&quot;)
+}
+
+dependencies {
+  implementation &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
+  implementation &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
+  //...
+}
+
+dependencyManagement {
+  imports {
+    mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}&quot;
+  }
+}
+
+//...
+
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item></channel></rss>

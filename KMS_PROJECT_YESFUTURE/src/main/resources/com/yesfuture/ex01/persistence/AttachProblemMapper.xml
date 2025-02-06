@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace : 연결할 Mapper 인터페이스 경로 및 이름 -->
+<mapper namespace="com.yesfuture.ex01.persistence.AttachProblemMapper">
+
+	<resultMap type="com.yesfuture.ex01.domain.AttachProblemVO"
+		id="attachResultMap">
+		
+		<id property="attachProblemId" column="ATTACH_PROBLEM_ID" /> 
+		<result property="problemId" column="PROBLEM_ID" />
+		<result property="attachProblemPath" column="ATTACH_PROBLEM_PATH" />
+		<result property="attachProblemRealName" column="ATTACH_PROBLEM_REAL_NAME" />
+		<result property="attachProblemChgName" column="ATTACH_PROBLEM_CHG_NAME" />
+		<result property="attachProblemExtension" column="ATTACH_PROBLEM_EXTENSION"/>
+		<result property="attachProblemDateCreated" column="ATTACH_PROBLEM_DATE_CREATED"/>
+	</resultMap>
+
+	<insert id="insert">
+		INSERT INTO ATTACH_PROBLEM
+		VALUES (ATTACH_PROBLEM_SEQ.NEXTVAL, PROBLEM_SEQ.CURRVAL, #{attachProblemPath}, 
+		#{attachProblemRealName}, #{attachProblemChgName}, #{attachProblemExtension}, SYSDATE)
+	</insert>
+	
+	<insert id="insertModify">
+		INSERT INTO ATTACH_PROBLEM 
+		VALUES (ATTACH_PROBLEM_SEQ.NEXTVAL, #{problemId}, #{attachProblemPath},
+		 #{attachProblemRealName}, #{attachProblemChgName}, #{attachProblemExtension}, SYSDATE)
+	</insert>
+	
+	<select id="selectByProblemId" resultMap="problemOptionResultMap" parameterType="java.util.List">
+		SELECT *
+		FROM ATTACH_PROBLEM
+		WHERE PROBLEM_ID IN
+		<foreach collection="problemIdList" item="id" open="(" separator="," close=")">
+		    #{id}
+		</foreach>
+	</select>
+	
+	<select id="selectByAttachProblemId" resultMap="attachResultMap">
+		SELECT * FROM ATTACH_PROBLEM 
+		WHERE ATTACH_PROBLEM_ID = #{attachProblemId}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM ATTACH_PROBLEM
+		WHERE PROBLEM_ID = #{problemId}
+	</delete>
+
+</mapper>

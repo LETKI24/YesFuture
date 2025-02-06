@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="contextPath"/>
+		<item key="selection" value=""/>
 		<list key="findhistory">
+			<item value="department"/>
+			<item value="grid"/>
+			<item value="image"/>
 			<item value="contextPath"/>
 			<item value="currentLikeCount"/>
 			<item value="UTF-8"/>
@@ -20,9 +23,6 @@
 			<item value="?"/>
 			<item value="attach_item"/>
 			<item value="net"/>
-			<item value="attachQuestionVOFile-list"/>
-			<item value="attachDTOFile-list"/>
-			<item value="attach-list"/>
 		</list>
 		<list key="replacehistory">
 		</list>

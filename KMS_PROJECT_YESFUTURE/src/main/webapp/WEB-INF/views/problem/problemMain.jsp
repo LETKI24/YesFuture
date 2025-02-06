@@ -72,9 +72,17 @@
 		    padding: 0;
 		    background-color: #f4f4f4;
         }
-        .button-grid {
+        .button-part {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin: 100px auto; /* 수직 여백 추가 */
+        }
+        .button-year {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 20px;
             width: 80%;
             max-width: 800px;
@@ -161,7 +169,7 @@
 	<!-- 가로 경계선 -->
     <hr class="divider">
     
-	<div class="button-grid">
+	<div class="button-part">
         <div class="button" data-value="IMD" onclick="toggleCheck(this)">
             <span class="check-icon"></span>
             <%-- img src="icons/family.png" alt="가정의학과" 추후 img 업데이트, 앞뒤로 <>만 추가 --%>
@@ -254,6 +262,50 @@
         
     </div>
     
+    <div class="button-year">
+        <div class="button" data-value="2024" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <%-- img src="icons/family.png" alt="가정의학과" 추후 img 업데이트, 앞뒤로 <>만 추가 --%>
+            <span>2024년</span>
+        </div>
+        <div class="button" data-value="2023" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2023년</span>
+        </div>
+        <div class="button" data-value="2022" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2022년</span>
+        </div>
+        <div class="button" data-value="2021" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2021년</span>
+        </div>
+        <div class="button" data-value="2020" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2020년</span>
+        </div>
+        <div class="button" data-value="2019" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2019년</span>
+        </div>
+        <div class="button" data-value="2018" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2018년</span>
+        </div>
+        <div class="button" data-value="2017" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2017년</span>
+        </div>
+        <div class="button" data-value="2016" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2016년</span>
+        </div>
+        <div class="button" data-value="2015" onclick="toggleCheck(this)">
+            <span class="check-icon"></span>
+            <span>2015년</span>
+        </div>        
+    </div>
+    
     <div>
     	<button id="submit-btn" style="display: block; margin: 20px auto; padding: 10px 20px; 
     				font-size: 16px; cursor: pointer;">문제풀기</button>
@@ -270,23 +322,39 @@
             button.classList.toggle('checked'); // 선택 상태 추가/제거
         }
         
-        // "문제풀기" 버튼 클릭 이벤트
-        $('#submit-btn').click(function () {
-            // 선택된 버튼 데이터 수집
-            const selectedButtons = $('.button.checked');
-            const selectedData = selectedButtons.map(function () {
-                return $(this).data('value');
-            }).get(); // jQuery 객체에서 배열로 변환
-			
-            console.log("selectedButtons : " + selectedButtons.toArray());
-            console.log("selectedData : " + selectedData);
-                        
-            if (selectedData.length === 0) {
-                alert("최소 하나의 버튼을 선택해주세요.");
-                return;
-            }
 
-
+        // '문제풀기' 버튼 클릭 시 선택된 분과와 년도를 수집해 trainingEntrance.jsp로 이동
+	    document.getElementById("submit-btn").addEventListener("click", function() {
+	        // 선택된 분과 버튼을 모두 찾음
+	        var partButton = document.querySelectorAll(".button-part .button.checked");
+	        var selectedPart = [];
+	        partButton.forEach(function(btn) {
+	            selectedPart.push(btn.getAttribute("data-value"));
+	        });
+	        
+	        // 선택된 년도 버튼을 모두 찾음
+	        var yearButton = document.querySelectorAll(".button-year .button.checked");
+	        var selectedYear = [];
+	        yearButton.forEach(function(btn) {
+	            selectedYear.push(btn.getAttribute("data-value"));
+	        });
+	        
+	        console.log("selectedPart : " + selectedPart);
+	        console.log("selectedYear : " + selectedYear);
+	            
+	        // 분과와 년도 모두 최소 한 개씩 선택되어야 함
+	        if (selectedPart.length === 0 || selectedYear.length === 0) {
+	            alert("분과와 출제년도를 모두 선택해주세요.");
+	            return;
+	        }
+	            
+	        // 예시로, 분과와 년도 값을 콤마로 구분한 문자열로 전달
+	        // URL 예: trainingEntrance.jsp?dept=IDIOT,LAW&year=2022,2023,2024
+	        var queryString = "?part=" + encodeURIComponent(selectedPart.join(",")) +
+	                          "&year=" + encodeURIComponent(selectedYear.join(","));
+	        
+	        // trainingEntrance.jsp로 이동
+	        window.location.href = "trainingEntrance.jsp" + queryString;
         });
     </script>
     

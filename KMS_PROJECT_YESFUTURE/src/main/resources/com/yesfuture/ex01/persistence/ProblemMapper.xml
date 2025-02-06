@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.ProblemMapper">
+	
+	<resultMap type="com.yesfuture.ex01.domain.Problem" id="problemResultMap">
+		
+		<id property = "problemId" column="PROBLEM_ID"/>
+		<result property = "problemContent" column="PROBLEM_CONTENT"/>
+		<result property = "problemDiagnosis" column="PROBLEM_DIAGNOSIS"/>
+		<result property = "problemYear" column="PROBLEM_YEAR"/>
+		<result property = "problemSource" column="PROBLEM_SOURCE"/>
+		<result property = "problemPart" column="PROBLEM_PART"/>
+		<result property = "memberId" column="MEMBER_ID"/>
+	</resultMap>
+	 
+	 <insert id="insert">
+		INSERT INTO PROBLEM VALUES
+		(PROBLEM_SEQ.NEXTVAL, #{problemContent}, #{problemDiagnosis}, #{problemYear},
+		 1, #{problemPart}, #{memberId})
+	 </insert>
+	 
+	 <select id="selectProblemByPartAndYear" resultMap="problemResultMap">
+	 	SELECT *
+	 	FROM PROBLEM
+		WHERE PROBLEM_PART IN
+	  <foreach item="item" collection="partArray" open="(" separator="," close=")">
+	      #{item}
+	  </foreach>
+	  AND PROBLEM_YEAR IN
+	  <foreach item="item" collection="yearArray" open="(" separator="," close=")">
+	      #{item}
+	  </foreach>
+	</select>
+	 
+</mapper>

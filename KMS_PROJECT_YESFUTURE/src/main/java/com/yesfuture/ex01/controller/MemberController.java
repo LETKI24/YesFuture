@@ -86,38 +86,6 @@ public class MemberController {
 		return new ResponseEntity<>(String.valueOf(result), HttpStatus.OK);
 	}
 
-	// login.jsp 페이지 호출
-//	@GetMapping("/login")
-//	public void loginGET() {
-//		log.info("loginGET()");
-//	}
-
-	// login.jsp에서 전송받은 회원 데이터를 조회
-//	@PostMapping("/login")
-//	public String loginPOST(MemberVO memberVO, HttpSession session, Model model) {
-//		log.info("loginPOST() 호출");
-//
-//		// 이메일과 비밀번호 검증
-//		MemberVO verifyMember = memberService.verifyMember(memberVO);
-//
-//		if (verifyMember != null) { // 로그인 성공
-//			log.info("로그인 성공: " + memberVO.getMemberEmail());
-//			session.setAttribute("memberEmail", verifyMember.getMemberEmail()); // 세션에 이메일 저장
-//			session.setAttribute("memberNickname", verifyMember.getMemberNickname()); // 세션에 닉네임 저장
-//			session.setAttribute("memberId", verifyMember.getMemberId()); // 세션에 Id 저장
-//			
-//			log.info("memberEmail :" + session.getAttribute("memberEmail"));
-//			log.info("memberNickname :" + session.getAttribute("memberNickname"));
-//			
-//			session.setMaxInactiveInterval(3600); // session 60분 설정
-//			return "redirect:/board/main"; // 메인 페이지로 이동
-//		} else { // 로그인 실패
-//			log.info("로그인 실패: 이메일 또는 비밀번호 불일치");
-//			model.addAttribute("loginError", "이메일 또는 비밀번호를 확인하세요.");
-//			return "board/login"; // 로그인 페이지로 다시 이동
-//		}
-//	}
-
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		log.info("logout() 호출");
@@ -132,6 +100,10 @@ public class MemberController {
 		return "redirect:/board/main";
 	}
 	
+	@GetMapping("/info")
+	public void info() {
+		log.info("info()");
+	}
 	
 	
 } // end MapperController
