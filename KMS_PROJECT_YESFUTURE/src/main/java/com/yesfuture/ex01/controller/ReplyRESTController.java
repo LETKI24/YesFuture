@@ -29,19 +29,19 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping(value = "/reply") // url : /ex01/reply
 @Log4j
 public class ReplyRESTController {
-
+	
 	@Autowired
 	private ReplyService replyService;
 	
 	@Autowired
 	private LikeService likeService;
-
+	
 	@PreAuthorize("principal.member.memberNickname == #replyQuestionVO.memberNickname")
 	@PostMapping("/replyQuestion") // POST : 댓글 입력
 	public ResponseEntity<Integer> createReplyQuestion(@RequestBody ReplyQuestionVO replyQuestionVO) {
 		// JSON으로 전송된 replyQuestionVO가 여기 온다-@RequestBody ReplyVO replyVO
 		log.info("createReplyQuestion()");
-
+		
 		int result = replyService.createReplyQuestion(replyQuestionVO);	
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}

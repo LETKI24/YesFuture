@@ -354,7 +354,7 @@
 	                          "&year=" + encodeURIComponent(selectedYear.join(","));
 	        
 	        // trainingEntrance.jsp로 이동
-	        window.location.href = "trainingEntrance.jsp" + queryString;
+	        window.location.href = "trainingEntrance" + queryString;
         });
     </script>
     

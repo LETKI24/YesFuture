@@ -33,6 +33,13 @@ public class ProblemVO {
 		return attachProblemList;
 	}
 	
-	private String optionContent;
+	private List<ProblemOption> optionList;
+	
+	public List<ProblemOption> getOptionList() {
+		if(optionList == null) {
+			optionList = new ArrayList<ProblemOption>();
+		}
+		return optionList;
+	}
 	
 }

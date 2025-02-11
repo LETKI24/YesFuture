@@ -10,8 +10,8 @@ import com.yesfuture.ex01.domain.ProblemOption;
 @Mapper
 public interface ProblemOptionMapper {
 	
-	int insert(String optionContentAll);
+	int insert(String options);
 
-	List<ProblemOption> selectByProblemId(@Param("problemIdList") List<Integer> problemIdList);
+	List<ProblemOption> selectByProblemId(@Param("problemIds") List<Integer> problemIds);
 	
 }

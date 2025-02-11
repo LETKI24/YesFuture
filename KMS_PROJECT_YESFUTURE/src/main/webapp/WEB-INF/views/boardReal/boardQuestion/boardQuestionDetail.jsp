@@ -188,21 +188,18 @@ rel="stylesheet">
 		
 	<div class="menu-bar">
         <!-- 이 위치에 main으로 가는 버튼 만들기 -->
-        <a href="problemMain" class="group1"><input type="button" value="문제은행 가기"></a>
-        <a href="boardMain" class="group1"><input type="button" value="게시판"></a>
+        <a href="../../problem/problemMain" class="group1"><input type="button" value="문제은행 가기"></a>
+        <a href="../boardMain" class="group1"><input type="button" value="게시판"></a>
 	
 		<div class="group2">
-			<c:if test="${empty sessionScope.memberEmail }">
-			<!-- 회원 가입 버튼 -->
-		    <a href="agree"><input type="button" value="${boardQuestionVO.boardQuestionId}"></a>
-		    <!-- 로그인 버튼 -->
-		    <a href="login"><input type="button" value="로그인"></a>
-			</c:if>
-			
-			<c:if test="${not empty sessionScope.memberEmail }">
-			<a href="mypage"><input type="button" value="${sessionScope.memberNickname}"></a>
-			<a href="../board/logout"><input type="button" value="로그아웃"></a>
-			</c:if>
+		    <!-- 로그인 상태 -->
+		    <sec:authorize access="isAuthenticated()">
+		        <a href="../../board/info"><sec:authentication property="principal.member.memberNickname"/></a>
+		        <form action="../auth/logout" method="post">
+		            <input type="submit" value="로그아웃">
+		            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+		        </form>
+		    </sec:authorize>
 		</div>
 	</div>
 	

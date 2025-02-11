@@ -34,5 +34,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	      #{item}
 	  </foreach>
 	</select>
+	
+	<select id="selectProblemCount" resultType = "Integer">
+	 	SELECT PROBLEM_ID
+	 	FROM PROBLEM
+		WHERE PROBLEM_PART IN
+	  <foreach item="item" collection="partArray" open="(" separator="," close=")">
+	      #{item}
+	  </foreach>
+	  AND PROBLEM_YEAR IN
+	  <foreach item="item" collection="yearArray" open="(" separator="," close=")">
+	      #{item}
+	  </foreach>
+	</select>
+	
+	<select id="selectProblemByIds" parameterType="list" resultMap="problemResultMap">
+	    SELECT * FROM PROBLEM
+	    WHERE PROBLEM_ID IN
+	    <foreach item="id" collection="list" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>
+	</select>
 	 
 </mapper>

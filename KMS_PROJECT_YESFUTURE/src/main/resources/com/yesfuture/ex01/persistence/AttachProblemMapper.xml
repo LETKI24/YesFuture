@@ -30,11 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 #{attachProblemRealName}, #{attachProblemChgName}, #{attachProblemExtension}, SYSDATE)
 	</insert>
 	
-	<select id="selectByProblemId" resultMap="problemOptionResultMap" parameterType="java.util.List">
+	<select id="selectByProblemId" resultMap="attachResultMap" parameterType="java.util.List">
 		SELECT *
 		FROM ATTACH_PROBLEM
 		WHERE PROBLEM_ID IN
-		<foreach collection="problemIdList" item="id" open="(" separator="," close=")">
+		<foreach collection="problemIds" item="id" open="(" separator="," close=")">
 		    #{id}
 		</foreach>
 	</select>

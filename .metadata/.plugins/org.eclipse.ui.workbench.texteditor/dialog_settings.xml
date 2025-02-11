@@ -6,8 +6,9 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="select"/>
 		<list key="findhistory">
+			<item value="select"/>
 			<item value="department"/>
 			<item value="grid"/>
 			<item value="image"/>
@@ -22,7 +23,6 @@
 			<item value="array"/>
 			<item value="?"/>
 			<item value="attach_item"/>
-			<item value="net"/>
 		</list>
 		<list key="replacehistory">
 		</list>

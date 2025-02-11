@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.CorrectOptionMapper">
+	
+	<resultMap type="com.yesfuture.ex01.domain.CorrectOption" id="correctOptionResultMap">
+		
+		<id property = "correctOptionId" column="CORRECT_OPTION_ID"/>
+		<result property = "problemId" column="PROBLEM_ID"/>
+		<result property = "optionContent" column="OPTION_CONTENT"/>
+	</resultMap>
+	 
+     <insert id="insert">
+        INSERT INTO CORRECT_OPTION VALUES
+		(CORRECT_SEQ.NEXTVAL, PROBLEM_SEQ.CURRVAL, #{correctOption})
+     </insert>
+
+</mapper>

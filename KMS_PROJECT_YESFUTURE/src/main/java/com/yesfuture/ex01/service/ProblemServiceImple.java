@@ -16,6 +16,7 @@ import com.yesfuture.ex01.domain.Problem;
 import com.yesfuture.ex01.domain.ProblemOption;
 import com.yesfuture.ex01.domain.ProblemVO;
 import com.yesfuture.ex01.persistence.AttachProblemMapper;
+import com.yesfuture.ex01.persistence.CorrectOptionMapper;
 import com.yesfuture.ex01.persistence.ProblemMapper;
 import com.yesfuture.ex01.persistence.ProblemOptionMapper;
 
@@ -32,21 +33,34 @@ public class ProblemServiceImple implements ProblemService{
 	private ProblemOptionMapper problemOptionMapper;
 	
 	@Autowired
+	private CorrectOptionMapper correctOptionMapper;
+	
+	@Autowired
 	private AttachProblemMapper attachProblemMapper;
 	
 	@Transactional(value = "transactionManager") 
 	@Override
-	public int createProblem(ProblemVO problemVO, String optionContentAll) {
+	public int createProblem(ProblemVO problemVO, String[] optionArray) {
 		log.info("createProblem()");
 		log.info("problemVO : " + problemVO);
-		log.info("optionContentAll : " + optionContentAll);
+		log.info("optionArray : " + optionArray);
 		
+		// 문제 본문 등록
 		int insertProblemResult = problemMapper.insert(toEntity(problemVO));
 		log.info(insertProblemResult + "행 게시글 등록");
 		
-		int insertProblemOptionResult = problemOptionMapper.insert(optionContentAll); 
-		log.info(insertProblemOptionResult + "행 게시글 등록");
+		// 문제 객관식 보기 등록
+		int insertProblemOptionResult = 0;
+		for(String option : optionArray) {
+			insertProblemOptionResult += problemOptionMapper.insert(option);
+		}
+		log.info(insertProblemOptionResult + "행 객관식 보기 등록");
 		
+		// 문제 정답 등록
+		int insertCorrectOptionResult = correctOptionMapper.insert(optionArray[0]);
+		log.info(insertCorrectOptionResult + "행 정답 등록");
+		
+		// 문제 첨부파일 등록
 		List<AttachProblemVO> attachProblemList = problemVO.getAttachProblemList();
 
 		int insertAttachProblemResult = 0;
@@ -59,14 +73,30 @@ public class ProblemServiceImple implements ProblemService{
 	}
 	
 	@Override
-	public List<ProblemVO> getProblemByPart(String[] partArray, String[] yearArrayStr) {
-        
+	public List<Integer> getProblemCount(String[] partArray, String[] yearArrayStr) {
 		
 		int[] yearArray = Arrays.stream(yearArrayStr)
-                				.mapToInt(Integer::parseInt)
-                				.toArray();
+				.mapToInt(Integer::parseInt)
+				.toArray();
+		
+		List<Integer> problemIdList = problemMapper.selectProblemCount(partArray, yearArray);
+		
+		log.info("problemIdList : " + problemIdList);
+		
+        // 문제가 없는 경우 빈 리스트 반환
+        if (problemIdList == null || problemIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
+		
+		return problemIdList;
+	}
+	
+	@Override
+	public List<ProblemVO> getProblemByIds(List<Integer> problemIds) {
+		List<ProblemVO> problemVOList = new ArrayList<>();
+
 		// problemPart와 problemYear로 List<Problem>을 가져오기
-        List<Problem> problems = problemMapper.selectProblemByPartAndYear(partArray, yearArray);
+        List<Problem> problems = problemMapper.selectProblemByIds(problemIds);
         
         log.info("problems : " + problems);
         
@@ -75,29 +105,115 @@ public class ProblemServiceImple implements ProblemService{
             return new ArrayList<>();
         }
         
-        // 조회된 Problem 리스트에서 problemId만 추출
-        List<Integer> problemIdList = problems.stream()
-                                              .map(Problem::getProblemId)
-                                              .collect(Collectors.toList());
-        
         // 추출한 problemId 목록을 이용해서 한 번에 해당하는 ProblemOption들과 첨부이미지를 조회
-        List<ProblemOption> options = problemOptionMapper.selectByProblemId(problemIdList);
+        List<ProblemOption> options = problemOptionMapper.selectByProblemId(problemIds);
         log.info("options : " + options);
         
-        List<AttachProblemVO> images = attachProblemMapper.selectByProblemId(problemIdList);
+        List<AttachProblemVO> images = attachProblemMapper.selectByProblemId(problemIds);
         log.info("images : " + images);
         
         
         // List<Problem> problems와 List<ProblemOption> options를 합하여 List<ProblemVO> problemList 만들기
         // 문제와 해당 옵션을 합쳐 ProblemVO로 변환
-        List<ProblemVO> problemVOList = new ArrayList<>();
         
         for (Problem problem : problems) {
+        	List<ProblemOption> optionList = new ArrayList<>();
+        	List<AttachProblemVO> attachList = new ArrayList<>();
+        	
+            for (ProblemOption option : options) {
+                if (problem.getProblemId() == option.getProblemId()) {
+                    // 문제와 옵션의 problemId가 일치하면 optionContent 설정
+                	optionList.add(option);
+                }
+            }
+            
+            for (AttachProblemVO image : images) {
+                if (problem.getProblemId() == image.getProblemId()) {
+                    // 문제와 옵션의 problemId가 일치하면 optionContent 설정
+                	attachList.add(image);
+                }
+            }
+            
+            ProblemVO vo = toVO(problem);
+            
+            vo.setOptionList(optionList);
+            vo.setAttachProblemList(attachList);
+            
+            // 생성한 ProblemVO 객체를 리스트에 추가
+            problemVOList.add(vo);
 
         }
-                
-		return problemVOList ;
+        
+        return problemVOList ;
 	}
+	
+	
+//	@Override
+//	public List<ProblemVO> getProblemByPart(String[] partArray, String[] yearArrayStr) {
+//        
+//		List<ProblemVO> problemVOList = new ArrayList<>();
+//		
+//		int[] yearArray = Arrays.stream(yearArrayStr)
+//                				.mapToInt(Integer::parseInt)
+//                				.toArray();
+//		// problemPart와 problemYear로 List<Problem>을 가져오기
+//        List<Problem> problems = problemMapper.selectProblemByPartAndYear(partArray, yearArray);
+//        
+//        log.info("problems : " + problems);
+//        
+//        // 문제가 없는 경우 빈 리스트 반환
+//        if (problems == null || problems.isEmpty()) {
+//            return new ArrayList<>();
+//        }
+//        
+//        // 조회된 Problem 리스트에서 problemId만 추출
+//        List<Integer> problemIdList = problems.stream()
+//                                              .map(Problem::getProblemId)
+//                                              .collect(Collectors.toList());
+//        
+//        // 추출한 problemId 목록을 이용해서 한 번에 해당하는 ProblemOption들과 첨부이미지를 조회
+//        List<ProblemOption> options = problemOptionMapper.selectByProblemId(problemIdList);
+//        log.info("options : " + options);
+//        
+//        List<AttachProblemVO> images = attachProblemMapper.selectByProblemId(problemIdList);
+//        log.info("images : " + images);
+//        
+//        
+//        // List<Problem> problems와 List<ProblemOption> options를 합하여 List<ProblemVO> problemList 만들기
+//        // 문제와 해당 옵션을 합쳐 ProblemVO로 변환
+//        
+//        for (Problem problem : problems) {
+//        	String optionContent = "";
+//        	List<AttachProblemVO> attachList = new ArrayList<>();
+//        	
+//            for (ProblemOption option : options) {
+//                if (problem.getProblemId() == option.getProblemId()) {
+//                    // 문제와 옵션의 problemId가 일치하면 optionContent 설정
+//                	optionContent = option.getOptionContent();
+//                    // 한 문제에 하나의 옵션만 있으면 break; 추가 (필요시)
+//                    break;
+//                }
+//            }
+//            
+//            for (AttachProblemVO image : images) {
+//                if (problem.getProblemId() == image.getProblemId()) {
+//                    // 문제와 옵션의 problemId가 일치하면 optionContent 설정
+//                	attachList.add(image);
+//                }
+//            }
+//            
+//            ProblemVO vo = toVO(problem);
+//            
+//            vo.setOptionContent(optionContent);
+//            vo.setAttachProblemList(attachList);
+//            
+//            // 생성한 ProblemVO 객체를 리스트에 추가
+//            problemVOList.add(vo);
+//
+//        }
+//                
+//		return problemVOList ;
+//	}
 		
 	
 	// ProblemVO 데이터를 Problem에 적용하는 메서드

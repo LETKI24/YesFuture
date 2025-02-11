@@ -6,8 +6,10 @@ import com.yesfuture.ex01.domain.Problem;
 import com.yesfuture.ex01.domain.ProblemVO;
 
 public interface ProblemService {
-	int createProblem(ProblemVO problemVO, String optionContentAll);
+	int createProblem(ProblemVO problemVO, String[] optionArray);
 
-	List<Problem> getProblemByPart(String[] partArray, String[] yearArray);
+	List<Integer> getProblemCount(String[] partArray, String[] yearArray);
+
+	List<ProblemVO> getProblemByIds(List<Integer> problemIds);
 	
 }

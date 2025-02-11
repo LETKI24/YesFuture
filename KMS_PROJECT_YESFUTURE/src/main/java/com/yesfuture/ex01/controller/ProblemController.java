@@ -1,6 +1,8 @@
 package com.yesfuture.ex01.controller;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +46,10 @@ public class ProblemController {
 		log.info("problemVO = " + problemVO.toString());
 		log.info("optionContentAll = " + optionContentAll);
 		
-		int result = problemService.createProblem(problemVO, optionContentAll);
+		String[] optionArray = optionContentAll.split("\\|");
+		log.info("optionArray : " + Arrays.toString(optionArray));
+		
+		int result = problemService.createProblem(problemVO, optionArray);
 		log.info(result + "행 등록");
 		return "redirect:/board/info";
 	}
@@ -58,11 +63,31 @@ public class ProblemController {
         String[] partArray = part.split(",");
         String[] yearArray = year.split(",");
         
-        List<Problem> problemList = problemService.getProblemByPart(partArray, yearArray);
-    
-        model.addAttribute("problemList", problemList);
+        List<Integer> problemIdList = problemService.getProblemCount(partArray, yearArray);
+        
+        log.info("problemIdList : " + problemIdList);
+        
+        model.addAttribute("problemIdList", problemIdList);
         
         // trainingEntrance.jsp (View Resolver에 따라 JSP로 포워딩)
-        return "trainingEntrance";
+        return "problem/trainingEntrance";
+    }
+    
+    @PostMapping("/training")
+    public String training(@RequestParam("problemIds") List<String> StrProblemIds, Model model) {
+        log.info("training()");
+        
+        List<Integer> problemIds = StrProblemIds.stream()
+							                .map(Integer::parseInt)
+							                .collect(Collectors.toList());
+        
+    	// problemId 리스트를 기반으로 전체 문제 데이터 조회
+        List<ProblemVO> problemList = problemService.getProblemByIds(problemIds);
+
+        log.info("problemList : " + problemList);
+        
+        model.addAttribute("problemList", problemList);
+        
+        return "problem/training"; // training.jsp로 포워딩
     }
 }

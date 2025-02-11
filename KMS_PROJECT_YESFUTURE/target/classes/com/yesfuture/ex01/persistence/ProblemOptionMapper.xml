@@ -12,16 +12,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property = "optionContent" column="OPTION_CONTENT"/>
 	</resultMap>
 	 
-	 <insert id="insert">
-		INSERT INTO PROBLEM_OPTION VALUES
-		(OPTION_SEQ.NEXTVAL, PROBLEM_SEQ.CURRVAL, #{optionContent})
-	 </insert>
+     <insert id="insert">
+        INSERT INTO PROBLEM_OPTION VALUES
+		(OPTION_SEQ.NEXTVAL, PROBLEM_SEQ.CURRVAL, #{options})
+     </insert>
 	 
 	 <select id="selectByProblemId" resultMap="problemOptionResultMap" parameterType="java.util.List">
 		SELECT *
 		FROM PROBLEM_OPTION
 		WHERE PROBLEM_ID IN
-		<foreach collection="problemIdList" item="id" open="(" separator="," close=")">
+		<foreach collection="problemIds" item="id" open="(" separator="," close=")">
 		    #{id}
 		</foreach>
 	 </select>

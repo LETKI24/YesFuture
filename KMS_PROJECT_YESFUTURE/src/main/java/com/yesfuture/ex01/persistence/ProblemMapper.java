@@ -12,7 +12,11 @@ public interface ProblemMapper {
 
 	int insert(Problem problem);
 	
-    List<Problem> selectProblemByPartAndYear(@Param("partArray") String[] partArray, 
-            									@Param("yearArray") int[] yearArray);
+//    List<Problem> selectProblemByPartAndYear(@Param("partArray") String[] partArray, 
+//            									@Param("yearArray") int[] yearArray);
+    
+    List<Integer> selectProblemCount(@Param("partArray") String[] partArray, 
+										@Param("yearArray") int[] yearArray);
 
+	List<Problem> selectProblemByIds(List<Integer> problemIds);
 }
