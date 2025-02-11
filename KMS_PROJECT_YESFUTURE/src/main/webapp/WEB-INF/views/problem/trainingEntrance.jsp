@@ -63,7 +63,7 @@
         <c:out value="${fn:length(problemIdList) * 78}"/> 초 입니다.
     </p>
     
-	<form id="trainingForm" action="/ex01/problem/training" method="post">
+	<form id="trainingForm" action="/ex01/problem/training" method="GET">
 	    <!-- 선택한 problemIdList를 hidden input으로 전달 -->
 	    <c:forEach var="problemId" items="${problemIdList}">
 	        <input type="hidden" name="problemIds" value="${problemId}">
@@ -78,9 +78,6 @@
 		</div>		
 	</form>
     
-    <script>
-    	console.log("problemIdList: ", ${problemIdList});
-	</script>
     
 </body>
 </html>

@@ -43,7 +43,7 @@ public class ProblemServiceImple implements ProblemService{
 	public int createProblem(ProblemVO problemVO, String[] optionArray) {
 		log.info("createProblem()");
 		log.info("problemVO : " + problemVO);
-		log.info("optionArray : " + optionArray);
+		log.info("optionArray : " + Arrays.toString(optionArray));
 		
 		// 문제 본문 등록
 		int insertProblemResult = problemMapper.insert(toEntity(problemVO));

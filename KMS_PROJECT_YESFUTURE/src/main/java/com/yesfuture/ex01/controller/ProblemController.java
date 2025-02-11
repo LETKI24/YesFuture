@@ -73,7 +73,7 @@ public class ProblemController {
         return "problem/trainingEntrance";
     }
     
-    @PostMapping("/training")
+    @GetMapping("/training")
     public String training(@RequestParam("problemIds") List<String> StrProblemIds, Model model) {
         log.info("training()");
         
