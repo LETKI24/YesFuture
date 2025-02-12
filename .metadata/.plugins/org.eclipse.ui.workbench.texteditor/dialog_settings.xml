@@ -6,23 +6,23 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="select"/>
+		<item key="selection" value="updateHiddenField"/>
 		<list key="findhistory">
+			<item value="updateHiddenField"/>
+			<item value="memberId"/>
+			<item value="responseData"/>
+			<item value="response"/>
+			<item value="userResponse"/>
+			<item value="option"/>
+			<item value="selectOption"/>
+			<item value="Question"/>
+			<item value="Q"/>
+			<item value="optStatus"/>
 			<item value="select"/>
 			<item value="department"/>
 			<item value="grid"/>
 			<item value="image"/>
 			<item value="contextPath"/>
-			<item value="currentLikeCount"/>
-			<item value="UTF-8"/>
-			<item value="CharacterEncodingFilter"/>
-			<item value="$(&apos;#replies&apos;).html(list);"/>
-			<item value="replyList"/>
-			<item value="function("/>
-			<item value="Array"/>
-			<item value="array"/>
-			<item value="?"/>
-			<item value="attach_item"/>
 		</list>
 		<list key="replacehistory">
 		</list>

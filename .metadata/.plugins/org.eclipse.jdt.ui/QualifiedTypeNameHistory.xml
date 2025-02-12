@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.security.core.context.SecurityContextHolder"/>
-    <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.CustomUser"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.Member"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.service.LikeService"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.DeleteMapping"/>
@@ -10,7 +8,6 @@
     <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
     <fullyQualifiedTypeName name="org.springframework.web.servlet.mvc.support.RedirectAttributes"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
-    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.service.ProblemService"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.persistence.AttachQuestionMapper"/>
@@ -19,10 +16,6 @@
     <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.AttachQuestion"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.persistence.ProblemMapper"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.persistence.problemOptionMapper"/>
-    <fullyQualifiedTypeName name="lombok.ToString"/>
-    <fullyQualifiedTypeName name="lombok.Setter"/>
-    <fullyQualifiedTypeName name="lombok.Getter"/>
-    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="org.apache.ibatis.annotations.Mapper"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.persistence.ProblemOptionMapper"/>
@@ -52,12 +45,19 @@
     <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.Problem"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.ProblemVO"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.ProblemOption"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.util.function.Function"/>
     <fullyQualifiedTypeName name="org.apache.ibatis.annotations.Param"/>
     <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="oracle.jdbc.driver.parser.util.Array"/>
+    <fullyQualifiedTypeName name="com.yesfuture.ex01.domain.ProblemOption"/>
+    <fullyQualifiedTypeName name="com.yesfuture.ex01.persistence.CorrectOptionMapper"/>
+    <fullyQualifiedTypeName name="lombok.ToString"/>
+    <fullyQualifiedTypeName name="lombok.Setter"/>
+    <fullyQualifiedTypeName name="lombok.Getter"/>
+    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
 </qualifiedTypeNameHistroy>

@@ -90,4 +90,19 @@ public class ProblemController {
         
         return "problem/training"; // training.jsp로 포워딩
     }
+    
+    @PostMapping("/trainingResult")
+    public String processTrainingResult(@RequestParam("responseData") String responseData, Model model) {
+        log.info("responseData : " + responseData);
+        
+        // Service에서 채점 등 최종 처리를 수행 
+        int result = 100; 
+    	
+        // 채점 결과를 모델에 담아서 JSP에 전달
+        model.addAttribute("result", result);
+        
+        // 최종 결과를 보여줄 JSP 페이지 (예: trainingResult.jsp)
+        return "problem/trainingResult";
+    }
+    
 }
