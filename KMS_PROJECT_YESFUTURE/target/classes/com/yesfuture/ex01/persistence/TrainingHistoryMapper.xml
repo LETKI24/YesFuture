@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.TrainingHistoryMapper">
+	
+	<resultMap type="com.yesfuture.ex01.domain.TrainingHistoryVO" id="traingingHistoryMap">
+		
+		<id property = "trainingHistoryId" column="TRAINING_HISTORY_ID"/>
+		<result property = "memberId" column="MEMBER_ID"/>
+		<result property = "problemPart" column="PROBLEM_PART"/>
+		<result property = "trainingHistoryDateCreated" column="TRAINING_HISTORY_DATE_CREATED"/>
+	</resultMap>
+	 
+	<insert id="insertHistory" parameterType="map">
+	    <foreach collection="partArray" item="part" separator=";" open="DECLARE BEGIN" close="; END;">
+	        INSERT INTO TRAINING_HISTORY (
+	            TRAINING_HISTORY_ID, 
+	            MEMBER_ID, 
+	            PROBLEM_PART, 
+	            TRAINING_HISTORY_DATE_CREATED
+	        )
+	        VALUES (
+	            TRAINING_HISTORY_SEQ.NEXTVAL, 
+	            #{memberId}, 
+	            #{part}, 
+				SYSDATE
+	        )
+	    </foreach>
+	</insert>
+
+</mapper>

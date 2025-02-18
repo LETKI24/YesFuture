@@ -19,6 +19,8 @@ import com.yesfuture.ex01.persistence.AttachProblemMapper;
 import com.yesfuture.ex01.persistence.CorrectOptionMapper;
 import com.yesfuture.ex01.persistence.ProblemMapper;
 import com.yesfuture.ex01.persistence.ProblemOptionMapper;
+import com.yesfuture.ex01.persistence.TrainingHistoryMapper;
+import com.yesfuture.ex01.persistence.TrainingResponseMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -37,6 +39,12 @@ public class ProblemServiceImple implements ProblemService{
 	
 	@Autowired
 	private AttachProblemMapper attachProblemMapper;
+	
+	@Autowired
+	private TrainingResponseMapper trainingResponseMapper;
+	
+	@Autowired
+	private TrainingHistoryMapper trainingHistoryMapper;
 	
 	@Transactional(value = "transactionManager") 
 	@Override
@@ -146,6 +154,36 @@ public class ProblemServiceImple implements ProblemService{
         
         return problemVOList ;
 	}
+	
+	@Override
+	public boolean getHistoryBoolean(int memberId) {
+		
+		// return에 true 들어가면 안되고 database에서 memberId로 된 data 있는지 조회해야됨
+		
+		return true;
+	}
+	
+
+	@Override
+	public int createOMRcard(int memberId, List<Integer> problemIds) {
+
+		// 회원 훈련 시작 시 OMR카드 생성
+		int insertTrainingResponse = trainingResponseMapper.insertOMR(memberId, problemIds);
+		log.info(insertTrainingResponse + "행 게시글 등록");
+		
+		return insertTrainingResponse;
+	}
+
+	@Override
+	public int createHistory(int memberId, String[] partArray) {
+		
+		// 회원 훈련 시작 시 기록 생성
+		int insertTrainingHistory = trainingHistoryMapper.insertHistory(memberId, partArray);
+		log.info(insertTrainingHistory + "행 게시글 등록");
+		
+		return insertTrainingHistory;
+	}
+
 	
 	
 //	@Override

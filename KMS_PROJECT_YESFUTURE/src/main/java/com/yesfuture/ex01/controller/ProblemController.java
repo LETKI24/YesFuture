@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.yesfuture.ex01.domain.CustomUser;
+import com.yesfuture.ex01.domain.Member;
 import com.yesfuture.ex01.domain.Problem;
 import com.yesfuture.ex01.domain.ProblemVO;
 import com.yesfuture.ex01.service.ProblemService;
@@ -26,11 +31,19 @@ public class ProblemController {
 	
 	@Autowired
 	private ProblemService problemService;
-
+	
 	// problemMain.jsp 페이지 호출
 	@GetMapping("/problemMain")
-	public void boardMain() {
+	public void problemMain(@AuthenticationPrincipal CustomUser customUser,
+			   				Model model) {
 		log.info("problemMain()");
+		
+		int memberId = customUser.getMember().getMemberId();
+		
+		boolean existHistory = problemService.getHistoryBoolean(memberId);
+		
+		model.addAttribute("existHistory", existHistory);
+	
 	}
 	
 	// registerProblem.jsp 페이지 호출
@@ -74,14 +87,23 @@ public class ProblemController {
     }
     
     @GetMapping("/training")
-    public String training(@RequestParam("problemIds") List<String> StrProblemIds, Model model) {
+    public String training(@RequestParam("problemIds") List<String> StrProblemIds,
+    					   @RequestParam("problemParts") String StrProblemParts,
+    					   @AuthenticationPrincipal CustomUser customUser,
+    					   Model model) {
         log.info("training()");
         
+        int memberId = customUser.getMember().getMemberId();
+        String[] partArray = StrProblemParts.split(",");
+        
+        // problemId 리스트를 기반으로 전체 문제 데이터 조회
         List<Integer> problemIds = StrProblemIds.stream()
 							                .map(Integer::parseInt)
 							                .collect(Collectors.toList());
-        
-    	// problemId 리스트를 기반으로 전체 문제 데이터 조회
+
+        int result1 = problemService.createOMRcard(memberId, problemIds);
+        int result2 = problemService.createHistory(memberId, partArray);
+            	
         List<ProblemVO> problemList = problemService.getProblemByIds(problemIds);
 
         log.info("problemList : " + problemList);
@@ -92,8 +114,10 @@ public class ProblemController {
     }
     
     @PostMapping("/trainingResult")
-    public String processTrainingResult(@RequestParam("responseData") String responseData, Model model) {
+    public String processTrainingResult(@RequestParam("memberId") String memberId,
+    									@RequestParam("responseData") String responseData, Model model) {
         log.info("responseData : " + responseData);
+        log.info("memberId : " + memberId);
         
         // Service에서 채점 등 최종 처리를 수행 
         int result = 100; 
@@ -104,5 +128,6 @@ public class ProblemController {
         // 최종 결과를 보여줄 JSP 페이지 (예: trainingResult.jsp)
         return "problem/trainingResult";
     }
+
     
 }

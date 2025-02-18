@@ -6,8 +6,9 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="updateHiddenField"/>
+		<item key="selection" value="toggleCheck"/>
 		<list key="findhistory">
+			<item value="toggleCheck"/>
 			<item value="updateHiddenField"/>
 			<item value="memberId"/>
 			<item value="responseData"/>
@@ -15,14 +16,6 @@
 			<item value="userResponse"/>
 			<item value="option"/>
 			<item value="selectOption"/>
-			<item value="Question"/>
-			<item value="Q"/>
-			<item value="optStatus"/>
-			<item value="select"/>
-			<item value="department"/>
-			<item value="grid"/>
-			<item value="image"/>
-			<item value="contextPath"/>
 		</list>
 		<list key="replacehistory">
 		</list>

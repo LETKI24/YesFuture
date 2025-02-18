@@ -69,6 +69,8 @@
 	        <input type="hidden" name="problemIds" value="${problemId}">
 	    </c:forEach>
 	    
+		<input type="hidden" name="problemParts" value="${param.part}">
+
 	    <button type="submit">문제 풀기</button>
 	    
 	    <div>

@@ -140,6 +140,23 @@
     </style>
 <meta charset="UTF-8">
 <title>문제은행 메인</title>
+
+<c:if test="${existHistory}">
+    <script>
+        // 페이지가 로드되면 confirm() 실행
+        var userConfirmed = confirm("이전 문제 풀이 이력이 있습니다. 계속 진행하시겠습니까? 아니오를 누를 경우 이전 기록은 삭제됩니다.");
+        if (userConfirmed) {
+            // '예'를 선택한 경우 - 예: form에 hidden 필드를 추가한 후 form 제출
+            // 또는 별도의 URL로 리다이렉트하는 등 원하는 로직 구현
+            //window.location.href = "문제풀기URL?userConfirm=true";
+        	console.log("예를 눌렀다, 이전 풀던 기록을 불러온다");
+        } else {
+        	console.log("아니오를 눌렀다, 이전 풀던 기록을 삭제한다");
+        }
+    </script>
+</c:if>
+
+
 </head>
 <body>
 	<h1>문제은행 만들기</h1>

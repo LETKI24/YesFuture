@@ -11,5 +11,11 @@ public interface ProblemService {
 	List<Integer> getProblemCount(String[] partArray, String[] yearArray);
 
 	List<ProblemVO> getProblemByIds(List<Integer> problemIds);
+
+	boolean getHistoryBoolean(int memberId);
+
+	int createOMRcard(int memberId, List<Integer> problemIds);
+
+	int createHistory(int memberId, String[] partArray);
 	
 }

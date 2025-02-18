@@ -37,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.authorizeRequests()
 				.antMatchers("/boardReal/**").access("hasRole('ROLE_FREE_MEMBER')")
 				.antMatchers("/member/info").access("hasRole('ROLE_FREE_MEMBER')")
-				.antMatchers("/member/modify").access("hasRole('ROLE_FREE_MEMBER')");
-				//.antMatchers("/problem/**").access("hasRole('ROLE_FREE_MEMBER')");
+				.antMatchers("/member/modify").access("hasRole('ROLE_FREE_MEMBER')")
+				.antMatchers("/problem/**").access("hasRole('ROLE_FREE_MEMBER')");
 
 		// 접근 제한 경로 설정
 		httpSecurity.exceptionHandling().accessDeniedPage("/auth/accessDenied");

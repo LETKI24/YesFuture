@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yesfuture.ex01.persistence.TrainingResponseMapper">
+	
+	<resultMap type="com.yesfuture.ex01.domain.TrainingResponseVO" id="traingingResponseMap">
+		
+		<id property = "trainingResponseId" column="TRAINING_RESPONSE_ID"/>
+		<result property = "problemId" column="PROBLEM_ID"/>
+		<result property = "memberId" column="MEMBER_ID"/>
+		<result property = "optionContent" column="OPTION_CONTENT"/>
+		<result property = "problemUncertain" column="PROBLEM_UNCERTAIN"/>
+	</resultMap>
+	 
+	<insert id="insertOMR" parameterType="map">
+	    <foreach collection="problemIds" item="problemId" separator=";" open="DECLARE BEGIN" close="; END;">
+	        INSERT INTO TRAINING_RESPONSE (
+	            TRAINING_RESPONSE_ID, 
+	            PROBLEM_ID, 
+	            MEMBER_ID, 
+	            OPTION_CONTENT, 
+	            PROBLEM_UNCERTAIN
+	        ) VALUES (
+	            TRAINING_RESPONSE_SEQ.NEXTVAL, 
+	            #{problemId}, 
+	            #{memberId}, 
+	            'Damn', 
+	            'N'
+	        )
+	    </foreach>
+	</insert>
+
+	<update id="update">
+	  UPDATE TRAINING_RESPONSE
+	  SET OPTION_CONTENT = #{optionContent}
+	  WHERE PROBLEM_ID = #{problemId} AND MEMBER_ID = #{memberId}
+	</update>
+	
+</mapper>
