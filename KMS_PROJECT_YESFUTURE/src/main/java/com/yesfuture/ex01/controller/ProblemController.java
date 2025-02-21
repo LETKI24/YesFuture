@@ -20,6 +20,7 @@ import com.yesfuture.ex01.domain.CustomUser;
 import com.yesfuture.ex01.domain.Member;
 import com.yesfuture.ex01.domain.Problem;
 import com.yesfuture.ex01.domain.ProblemVO;
+import com.yesfuture.ex01.domain.TrainingRecordVO;
 import com.yesfuture.ex01.service.ProblemService;
 
 import lombok.extern.log4j.Log4j;
@@ -37,10 +38,8 @@ public class ProblemController {
 	public void problemMain(@AuthenticationPrincipal CustomUser customUser,
 			   				Model model) {
 		log.info("problemMain()");
-		
-		int memberId = customUser.getMember().getMemberId();
-		
-		boolean existHistory = problemService.getHistoryBoolean(memberId);
+				
+		boolean existHistory = problemService.getHistoryBoolean(customUser.getMember().getMemberId());
 		
 		model.addAttribute("existHistory", existHistory);
 	
@@ -101,8 +100,8 @@ public class ProblemController {
 							                .map(Integer::parseInt)
 							                .collect(Collectors.toList());
 
-        int result1 = problemService.createOMRcard(memberId, problemIds);
-        int result2 = problemService.createHistory(memberId, partArray);
+        problemService.createOMRcard(memberId, problemIds);
+        problemService.createHistory(memberId, partArray);
             	
         List<ProblemVO> problemList = problemService.getProblemByIds(problemIds);
 
@@ -113,17 +112,17 @@ public class ProblemController {
         return "problem/training"; // training.jsp로 포워딩
     }
     
-    @PostMapping("/trainingResult")
-    public String processTrainingResult(@RequestParam("memberId") String memberId,
-    									@RequestParam("responseData") String responseData, Model model) {
-        log.info("responseData : " + responseData);
-        log.info("memberId : " + memberId);
+    @GetMapping("/trainingResult")
+    public String TrainingResult(@AuthenticationPrincipal CustomUser customUser,
+    							 Model model) {
         
-        // Service에서 채점 등 최종 처리를 수행 
-        int result = 100; 
+    	List<TrainingRecordVO> trainingRecordList = 
+    							problemService.getScore(customUser.getMember().getMemberId());
+    	
+    	log.info("trainingRecordList : " + trainingRecordList);
     	
         // 채점 결과를 모델에 담아서 JSP에 전달
-        model.addAttribute("result", result);
+        model.addAttribute("trainingRecordList", trainingRecordList);
         
         // 최종 결과를 보여줄 JSP 페이지 (예: trainingResult.jsp)
         return "problem/trainingResult";

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yesfuture.ex01.domain.AttachProblem;
 import com.yesfuture.ex01.domain.AttachProblemVO;
+import com.yesfuture.ex01.domain.CorrectOption;
 import com.yesfuture.ex01.domain.Problem;
 import com.yesfuture.ex01.domain.ProblemOption;
 import com.yesfuture.ex01.domain.ProblemVO;
+import com.yesfuture.ex01.domain.TrainingRecordVO;
+import com.yesfuture.ex01.domain.TrainingResponseVO;
 import com.yesfuture.ex01.persistence.AttachProblemMapper;
 import com.yesfuture.ex01.persistence.CorrectOptionMapper;
 import com.yesfuture.ex01.persistence.ProblemMapper;
 import com.yesfuture.ex01.persistence.ProblemOptionMapper;
 import com.yesfuture.ex01.persistence.TrainingHistoryMapper;
+import com.yesfuture.ex01.persistence.TrainingRecordMapper;
 import com.yesfuture.ex01.persistence.TrainingResponseMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -45,6 +50,9 @@ public class ProblemServiceImple implements ProblemService{
 	
 	@Autowired
 	private TrainingHistoryMapper trainingHistoryMapper;
+	
+	@Autowired
+	private TrainingRecordMapper trainingRecordMapper; 
 	
 	@Transactional(value = "transactionManager") 
 	@Override
@@ -159,8 +167,9 @@ public class ProblemServiceImple implements ProblemService{
 	public boolean getHistoryBoolean(int memberId) {
 		
 		// return에 true 들어가면 안되고 database에서 memberId로 된 data 있는지 조회해야됨
-		
-		return true;
+		int count = trainingHistoryMapper.countByMemberId(memberId);
+        // 레코드가 존재하면 true, 없으면 false 반환
+        return count > 0;
 	}
 	
 
@@ -184,6 +193,57 @@ public class ProblemServiceImple implements ProblemService{
 		return insertTrainingHistory;
 	}
 
+	// 채점 기능
+	@Transactional(value = "transactionManager")
+	@Override
+	public List<TrainingRecordVO> getScore(int memberId) {
+
+		// OMR 카드 가져오기
+		List<TrainingResponseVO> responseList = trainingResponseMapper.getOMR(memberId); 
+		
+		// OMR 카드에서 problemId의 List 추출
+	    List<Integer> problemIdList = responseList.stream()
+	            .map(TrainingResponseVO::getProblemId)
+	            .collect(Collectors.toList());
+		
+		// 정답지 가져오기
+		List<CorrectOption> keyList = correctOptionMapper.getKeyList(problemIdList);
+		
+	    // keyList를 HashMap으로 변환 (문제ID -> CorrectOption)
+	    Map<Integer, CorrectOption> keyMap = keyList.stream()
+	            .collect(Collectors.toMap(CorrectOption::getProblemId, Function.identity()));
+		
+	    // 각 응답에 대해 정답과 비교하여 TrainingRecordVO 생성
+	    List<TrainingRecordVO> recordList = new ArrayList<>();
+	    for (TrainingResponseVO response : responseList) {
+	        int problemId = response.getProblemId();
+	        CorrectOption correctOption = keyMap.get(problemId);
+	        
+	        // 정답 비교: optionContent가 일치하면 scoring은 1, 틀리면 그대로 0
+	        
+	        int scoring = 0;
+	        if (response.getOptionContent().equals(correctOption.getOptionContent())) {
+	        	scoring = 1;
+	        }
+	        
+	        // TrainingRecordVO 생성 (VO에 맞게 값들을 설정)
+	        TrainingRecordVO record = new TrainingRecordVO();
+	        record.setProblemId(problemId);
+	        record.setMemberId(memberId);
+	        record.setOptionContent(response.getOptionContent());
+	        record.setScoring(scoring);
+	        record.setProblemUncertain(response.getProblemUncertain());	        
+	        
+	        recordList.add(record);
+	    }
+	    
+	    trainingResponseMapper.deleteByMemberId(memberId);
+	    trainingHistoryMapper.deleteByMemberId(memberId);
+	    
+	    trainingRecordMapper.insert(recordList);
+	    
+		return recordList;
+	}
 	
 	
 //	@Override
@@ -305,5 +365,6 @@ public class ProblemServiceImple implements ProblemService{
 	    attachProblemVO.setAttachProblemDateCreated(attachProblem.getAttachProblemDateCreated());
 	    return attachProblemVO;
 	}
-	
+
+
 }

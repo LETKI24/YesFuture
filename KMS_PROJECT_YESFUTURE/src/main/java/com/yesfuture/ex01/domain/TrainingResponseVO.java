@@ -20,5 +20,5 @@ public class TrainingResponseVO {
 	private int memberId;
 	private String optionContent;
 	
-	private boolean problemUncertain;
+	private int problemUncertain;
 }

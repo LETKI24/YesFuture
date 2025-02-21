@@ -192,7 +192,7 @@
 	            showProblem(currentProblemIndex);
 	        }
 	        
-		}); // end document	        
+		}); // end document	       
     </script>
 </head>
 <body>
@@ -264,10 +264,20 @@
     </div>
     
     <!-- 하단의 페이지네이션 버튼들 -->
-    <div id="pagination" style="margin-top: 20px;">
+    <div id="pagination" style="margin-top: 50px;">
         <button type="button" id="prevProblem">이전</button>
         <button type="button" id="nextProblem">다음</button>
-        <button type="button" onclick="submitResponseSync()">제출</button>
+        <button type="button" id="submitBtn">제출하기</button>
+	        <script>
+			  document.getElementById("submitBtn").addEventListener("click", function() {
+			    if (confirm("이대로 문제풀이를 종료하고 채점하시겠습니까?")) {
+			      // '예'를 선택한 경우 trainingResult.jsp로 이동
+			      window.location.href = "trainingResult";
+			    }
+			    // '아니오'를 선택하면 아무 동작도 하지 않습니다.
+			  });
+			</script>
+        
         <button type="button" onclick="showProblemList()">문제 목록</button>
     </div>
     

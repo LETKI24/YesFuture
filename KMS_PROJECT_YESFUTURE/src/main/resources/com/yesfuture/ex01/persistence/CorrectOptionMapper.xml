@@ -12,9 +12,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property = "optionContent" column="OPTION_CONTENT"/>
 	</resultMap>
 	 
-     <insert id="insert">
+    <insert id="insert">
         INSERT INTO CORRECT_OPTION VALUES
 		(CORRECT_SEQ.NEXTVAL, PROBLEM_SEQ.CURRVAL, #{correctOption})
-     </insert>
-
+    </insert>
+	
+	<select id="getKeyList" parameterType="list" resultMap="correctOptionResultMap">
+	    SELECT * FROM CORRECT_OPTION
+	    WHERE PROBLEM_ID IN
+	    <foreach item="id" collection="list" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>
+	</select>
+	
 </mapper>

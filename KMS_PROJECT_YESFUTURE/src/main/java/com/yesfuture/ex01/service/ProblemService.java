@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yesfuture.ex01.domain.Problem;
 import com.yesfuture.ex01.domain.ProblemVO;
+import com.yesfuture.ex01.domain.TrainingRecordVO;
 
 public interface ProblemService {
 	int createProblem(ProblemVO problemVO, String[] optionArray);
@@ -17,5 +18,7 @@ public interface ProblemService {
 	int createOMRcard(int memberId, List<Integer> problemIds);
 
 	int createHistory(int memberId, String[] partArray);
+
+	List<TrainingRecordVO> getScore(int memberId);
 	
 }

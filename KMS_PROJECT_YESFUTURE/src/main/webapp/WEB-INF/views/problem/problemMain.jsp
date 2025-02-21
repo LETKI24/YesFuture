@@ -148,7 +148,7 @@
         if (userConfirmed) {
             // '예'를 선택한 경우 - 예: form에 hidden 필드를 추가한 후 form 제출
             // 또는 별도의 URL로 리다이렉트하는 등 원하는 로직 구현
-            //window.location.href = "문제풀기URL?userConfirm=true";
+            // window.location.href = "문제풀기URL?userConfirm=true";
         	console.log("예를 눌렀다, 이전 풀던 기록을 불러온다");
         } else {
         	console.log("아니오를 눌렀다, 이전 풀던 기록을 삭제한다");

@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            #{problemId}, 
 	            #{memberId}, 
 	            'Damn', 
-	            'N'
+	            0
 	        )
 	    </foreach>
 	</insert>
@@ -37,5 +37,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  SET OPTION_CONTENT = #{optionContent}
 	  WHERE PROBLEM_ID = #{problemId} AND MEMBER_ID = #{memberId}
 	</update>
+	
+	<select id="getOMR" resultMap="traingingResponseMap">
+		SELECT * FROM TRAINING_RESPONSE
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<delete id="deleteByMemberId">
+	 	DELETE TRAINING_RESPONSE WHERE MEMBER_ID = #{memberId}
+	</delete>
 	
 </mapper>
